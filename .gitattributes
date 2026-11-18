@@ -1,0 +1,7 @@
+# GitHub Linguist Configuration
+# Prioritize Enterprise Backend Architecture & Engine Sidecar (JavaScript & Python)
+
+*.html linguist-detectable=false
+*.json linguist-detectable=false
+*.md linguist-documentation=true
+*.pdf binary

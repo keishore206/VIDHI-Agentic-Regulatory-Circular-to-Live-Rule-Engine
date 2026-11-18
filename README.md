@@ -197,22 +197,79 @@ All 5 test suites will run and verify health, authentication, document validatio
 docker-compose up --build
 ```
 
+### Option 5: Run Python Regulatory Intelligence Sidecars
+
+```bash
+# Test CRCE AST compiler, 7-Agent A2A conductor, ledger replay & Neo4j graph generator
+python engine/crce_compiler.py
+python engine/multi_agent_conductor.py
+python engine/backtest_engine.py
+python engine/knowledge_graph.py
+```
+
 ---
 
 ## 📁 Repository Structure
 
 ```
+├── .gitattributes               # GitHub Linguist override: prioritizes JavaScript & Python backend code
 ├── index.html                   # Dual-mode responsive institutional banking portal
-├── server.js                    # Node.js Express REST API backend server
+├── server.js                    # Node.js institutional REST API gateway & static dispatcher
 ├── package.json                 # Project manifest, scripts, and dependencies
 ├── Dockerfile                   # Production container definition
 ├── docker-compose.yml           # Container orchestration file
 ├── .gitignore                   # Standard ignore rules
 ├── .env.example                 # Environment configuration template
+│
+├── backend/                     # Modular Institutional Banking Backend Architecture
+│   ├── config/
+│   │   ├── agentCards.js        # Roster of 7 A2A specialized agents & token budgets
+│   │   └── constants.js         # Regulatory authorities, roles & Clause 3.3 specs
+│   ├── controllers/
+│   │   ├── authController.js    # Maker/Checker authentication & session clearance
+│   │   ├── circularController.js # Document ingestion & verification
+│   │   ├── governanceController.js # Dual-key signoffs, rollback & Golden Thread audit
+│   │   ├── obligationController.js # CRCE compilation, obligations & Neo4j graph
+│   │   └── simulationController.js # Historical ledger replay & boundary tests
+│   ├── middleware/
+│   │   ├── auditMiddleware.js   # Forensic mutation request logger
+│   │   ├── authMiddleware.js    # Institutional Bearer & session clearance gate
+│   │   ├── errorHandler.js      # Standardized institutional error responses
+│   │   └── rbacMiddleware.js    # Role-based clearance levels (Admin vs Employer)
+│   ├── models/
+│   │   ├── AuditLog.js          # Immutable SHA-256 hash-chained audit ledger
+│   │   ├── BusinessRule.js      # Typed CBS Business Rule DSL model
+│   │   ├── GovernanceTicket.js  # Dual-key Maker-Checker state machine
+│   │   └── Obligation.js        # Statutory obligation model with MUST/PROHIBIT modalities
+│   ├── routes/
+│   │   └── api.js               # Master API route aggregator (18+ REST endpoints)
+│   ├── services/
+│   │   ├── crceCompilerService.js # CRCE AST compiler & guardrail injector
+│   │   ├── dualKeySignoffService.js # Key 1 Maker & Key 2 Checker digital signatures
+│   │   ├── goldenThreadAuditService.js # WORM forensic audit trail provider
+│   │   ├── ingestionService.js  # Scoping & non-KYC document rejection
+│   │   ├── knowledgeGraphService.js # Neo4j-compatible LPG graph nodes & edges
+│   │   ├── obligationExtractorService.js # Deterministic extraction of 5 clauses
+│   │   ├── policyAuditorService.js # Bank policy gap analysis (POL-RETAIL-KYC-v3)
+│   │   └── sandboxSimulationService.js # Replay of 14,240 accounts (0 closures)
+│   └── utils/
+│       ├── cryptoHelper.js      # SHA-256 hash chaining, WORM blocks & HMAC signatures
+│       └── dslValidator.js      # AST & syntax validation for typed CBS DSL rules
+│
+├── engine/                      # Python Regulatory Intelligence & CRCE Engine Sidecar
+│   ├── crce_compiler.py         # Python AST compiler for typed regulatory DSL
+│   ├── multi_agent_conductor.py # Python 7-Agent A2A orchestrator & message bus
+│   ├── backtest_engine.py       # Historical ledger replay engine (14,240 accounts)
+│   ├── knowledge_graph.py       # Neo4j Cypher generator & semantic graph builder
+│   └── requirements.txt         # Python engine dependencies
+│
+├── n8n/                         # n8n Multi-Agent Workflow Specification
+│   ├── VIDHI_Multi_Agent_Regulatory_Intelligence.json # Complete n8n canvas export
+│   └── README.md                # n8n node configuration & webhook import guide
+│
 ├── test/
 │   └── api.test.js              # Automated integration test suite (100% Green)
-├── VIDHI_Illustrative_KYC_Circular_Test.pdf # Official test circular artifact
-└── README.md                    # Institutional architecture dossier (This file)
+└── VIDHI_Illustrative_KYC_Circular_Test.pdf # Official test circular artifact
 ```
 
 ---
