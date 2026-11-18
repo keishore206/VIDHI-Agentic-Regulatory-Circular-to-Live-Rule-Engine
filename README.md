@@ -130,7 +130,7 @@ Authentication enforces a **strict 2-role institutional banking gate** (all exte
 | Role | Institutional Email | Simple Password | Officer Name & Department |
 | :--- | :--- | :--- | :--- |
 | **System Administrator (Admin / Checker)** | `admin@abcdemobank.com` | `admin` *(or `1234`)* | **Keishore G** • Enterprise Systems & Governance |
-| **Compliance Officer (Employer / Maker)** | `k.narayanan@abcdemobank.com` | `1234` *(or `employer`)* | **K. S. Narayanan** • Regulatory Affairs Desk |
+| **Compliance Officer (Employer / Maker)** | `k.narayanan@abcdemobank.com` | `1234` *(or `employer`)* | **Rohit V** • Regulatory Affairs Desk |
 
 > **Quick Demo Helper:** A **1-Click Fill** button is provided on the sign-in screen to quickly switch between designated roles.
 
