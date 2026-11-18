@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  vidhi-core:
+    build: .
+    container_name: vidhi_crce_engine
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      - NODE_ENV=production
+    restart: unless-stopped
+

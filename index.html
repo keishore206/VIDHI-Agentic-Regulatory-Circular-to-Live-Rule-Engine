@@ -1,0 +1,2011 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>VIDHI — Autonomous Regulatory Compliance Engine | ABC Demo Bank</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+
+  <style>
+    @layer base {
+      html, body { margin: 0; padding: 0; background-color: #f8fafc; font-family: 'Inter', sans-serif; }
+      body { overscroll-behavior: none; }
+    }
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: #f1f5f9; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+    .view-hidden { display: none !important; }
+    .fade-in { animation: fadeIn 0.2s ease-out; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .font-mono-code { font-family: 'JetBrains Mono', monospace; }
+  </style>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            bank: {
+              navy: "#0A192F",
+              slate: "#1E293B",
+              blue: "#1E40AF",
+              teal: "#0F766E",
+              accent: "#2563EB",
+              bg: "#F8FAFC",
+              card: "#FFFFFF",
+              border: "#E2E8F0",
+              muted: "#64748B",
+              danger: "#DC2626",
+              success: "#16A34A",
+              warning: "#D97706"
+            }
+          },
+          fontFamily: {
+            sans: ["Inter", "sans-serif"],
+            mono: ["JetBrains Mono", "monospace"]
+          }
+        }
+      }
+    };
+  </script>
+</head>
+
+<body class="bg-bank-bg text-bank-slate antialiased min-h-screen">
+
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     VIEW 1: INSTITUTIONAL SIGN IN GATEWAY (Strict 2-Account Only Authentication)
+     ═══════════════════════════════════════════════════════════════════════════ -->
+<div id="view-signin" class="min-h-screen w-full flex items-center justify-center p-4 md:p-8 bg-slate-100">
+  <div class="w-full max-w-5xl bg-bank-card rounded-2xl shadow-xl border border-bank-border overflow-hidden grid grid-cols-1 lg:grid-cols-12">
+
+    <!-- Left Brand & Context Rail (5 Cols) -->
+    <div class="lg:col-span-5 bg-bank-navy p-8 md:p-10 text-white flex flex-col justify-between relative overflow-hidden">
+      <div class="absolute -right-16 -bottom-16 w-80 h-80 rounded-full bg-bank-blue/20 blur-2xl pointer-events-none"></div>
+
+      <!-- Bank & Engine Identity -->
+      <div class="space-y-4">
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-teal-300 border border-white/10 shadow-sm">
+            <span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">account_balance</span>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="font-bold text-lg tracking-wider text-white">VIDHI</span>
+              <span class="text-[10px] font-semibold bg-teal-400 text-bank-navy px-2 py-0.5 rounded uppercase font-mono">CBS-CRCE</span>
+            </div>
+            <span class="text-xs text-slate-300">ABC Demo Bank • Core Regulatory Portal</span>
+          </div>
+        </div>
+
+        <div class="pt-6">
+          <h1 class="text-2xl font-bold text-white tracking-tight leading-snug">
+            Autonomous Regulatory Circular <br>
+            <span class="text-teal-300">to Core Banking Rules</span>
+          </h1>
+          <p class="text-xs text-slate-300 mt-2.5 leading-relaxed">
+            Eliminates multi-week manual circular interpretation. Translates RBI statutory notifications directly into validated business rules for core banking systems with zero missed obligations.
+          </p>
+        </div>
+      </div>
+
+      <!-- Core Institutional Assurance Cards -->
+      <div class="space-y-2.5 py-6">
+        <div class="p-3 rounded-lg bg-white/5 border border-white/10 flex items-start gap-2.5">
+          <span class="material-symbols-outlined text-teal-300 text-lg shrink-0 mt-0.5">verified_user</span>
+          <div>
+            <div class="text-xs font-semibold text-white">Zero Missed Statutory Obligations</div>
+            <div class="text-[11px] text-slate-300">Deterministic clause extraction with 100% regulatory compliance lineage.</div>
+          </div>
+        </div>
+
+        <div class="p-3 rounded-lg bg-white/5 border border-white/10 flex items-start gap-2.5">
+          <span class="material-symbols-outlined text-teal-300 text-lg shrink-0 mt-0.5">lock_person</span>
+          <div>
+            <div class="text-xs font-semibold text-white">Dual-Key Governance (Maker-Checker)</div>
+            <div class="text-[11px] text-slate-300">Mandatory 2-officer authorization before production CBS rule execution.</div>
+          </div>
+        </div>
+
+        <!-- Video Walkthrough Link -->
+        <button onclick="openVideoModal()" type="button" class="w-full mt-2 py-2 px-3 rounded-lg bg-white/10 hover:bg-white/15 border border-white/20 text-white text-xs font-medium flex items-center justify-center gap-2 transition-colors">
+          <span class="material-symbols-outlined text-red-400 text-base">play_circle</span>
+          <span>Click here for Video Demo: VIDHI (Team Codexx)</span>
+        </button>
+      </div>
+
+      <!-- Regulatory Subtext -->
+      <div class="pt-4 border-t border-white/10 flex items-center justify-between text-[11px] text-slate-400">
+        <span>RBI Master Directions 2026</span>
+        <span class="font-mono text-[10px]">Team Codexx</span>
+      </div>
+    </div>
+
+    <!-- Right Authentication Form (7 Cols) -->
+    <div class="lg:col-span-7 p-8 md:p-12 flex flex-col justify-between bg-white">
+      <div>
+        <div class="flex items-center justify-between pb-4 mb-6 border-b border-bank-border">
+          <span class="text-xs font-semibold uppercase tracking-wider text-bank-muted">Enterprise Access Control</span>
+          <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-100 text-bank-slate text-[11px] font-mono">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+            Strict Institutional Gate
+          </span>
+        </div>
+
+        <!-- Role Toggle Tabs -->
+        <div class="space-y-3">
+          <span class="text-xs font-bold text-bank-slate uppercase tracking-wider block">Select Designated Banking Role</span>
+          <div class="grid grid-cols-2 gap-2 p-1 bg-slate-100 rounded-xl">
+            <button type="button" id="tab-admin" onclick="selectRole('admin')" class="py-2.5 px-4 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-2 bg-bank-navy text-white shadow-sm">
+              <span class="material-symbols-outlined text-base">shield_person</span>
+              <span>1. System Administrator</span>
+            </button>
+            <button type="button" id="tab-employee" onclick="selectRole('employee')" class="py-2.5 px-4 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-2 text-bank-muted hover:text-bank-slate">
+              <span class="material-symbols-outlined text-base">badge</span>
+              <span>2. Compliance Officer / Employer</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Quick 1-Click Fill Box -->
+        <div class="mt-4 p-2.5 rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-between text-xs">
+          <div class="flex items-center gap-1.5 text-[11px] text-bank-slate">
+            <span class="material-symbols-outlined text-bank-blue text-sm">key</span>
+            <span>Quick: <strong id="quick-cred-label" class="font-mono text-bank-blue">admin@abcdemobank.com / admin</strong></span>
+          </div>
+          <button type="button" onclick="fillQuickCredentials()" class="px-2 py-0.5 rounded bg-white hover:bg-blue-50 text-bank-blue border border-blue-200 text-[11px] font-semibold transition-colors">
+            1-Click Fill
+          </button>
+        </div>
+
+        <!-- Strict Error Message -->
+        <div id="auth-error-box" class="view-hidden mt-4 p-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-xs flex items-center gap-2">
+          <span class="material-symbols-outlined text-base shrink-0">error</span>
+          <span id="auth-error-msg">Access denied. Only authorized institutional bank emails are permitted.</span>
+        </div>
+
+        <!-- Form -->
+        <form id="auth-form" class="mt-4 space-y-4" onsubmit="event.preventDefault(); validateAndSignIn();">
+          <div class="space-y-1">
+            <label class="block text-xs font-semibold text-bank-slate" for="input-email">
+              Institutional Email Address
+            </label>
+            <div class="relative">
+              <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-bank-muted">
+                <span class="material-symbols-outlined text-lg">mail</span>
+              </div>
+              <input autocomplete="username" class="w-full h-10 pl-9 pr-3 rounded-lg border border-bank-border bg-white text-bank-slate text-xs focus:ring-2 focus:ring-bank-blue focus:border-bank-blue focus:outline-none transition-all" id="input-email" name="email" required type="email" value="admin@abcdemobank.com">
+            </div>
+          </div>
+
+          <div class="space-y-1">
+            <label class="block text-xs font-semibold text-bank-slate" for="input-password">
+              Security Credential
+            </label>
+            <div class="relative">
+              <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-bank-muted">
+                <span class="material-symbols-outlined text-lg">lock</span>
+              </div>
+              <input autocomplete="current-password" class="w-full h-10 pl-9 pr-10 rounded-lg border border-bank-border bg-white text-bank-slate text-xs font-mono focus:ring-2 focus:ring-bank-blue focus:border-bank-blue focus:outline-none transition-all" id="input-password" name="password" required type="password" value="admin">
+              <button aria-label="Toggle password visibility" class="absolute inset-y-0 right-0 flex items-center px-3 text-bank-muted hover:text-bank-slate" type="button" onclick="togglePasswordVisibility()">
+                <span id="pwd-icon" class="material-symbols-outlined text-lg">visibility</span>
+              </button>
+            </div>
+          </div>
+
+          <button id="btn-submit" type="submit" class="w-full h-10 rounded-lg bg-bank-navy hover:bg-slate-800 text-white font-semibold text-xs shadow-sm transition-all flex items-center justify-center gap-1.5 active:scale-[0.99]">
+            <span>Sign In to Compliance Gateway</span>
+            <span class="material-symbols-outlined text-base">arrow_forward</span>
+          </button>
+        </form>
+      </div>
+
+      <!-- Security Notice Footer -->
+      <div class="pt-6 mt-6 border-t border-bank-border text-center text-[11px] text-bank-muted">
+        <span>Protected by Bank-Grade TLS 1.3 &amp; SOC2 Audit Controls. Non-authorized access is strictly prohibited.</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     VIEW 2: CORE BANKING COMPLIANCE WORKSPACE (Minimalist, Data-Dense)
+     ═══════════════════════════════════════════════════════════════════════════ -->
+<div id="view-dashboard" class="view-hidden min-h-screen bg-bank-bg flex">
+
+  <!-- ─── Persistent Left Banking Rail (Sidebar) ─── -->
+  <aside class="w-64 bg-white border-r border-bank-border h-screen fixed left-0 top-0 flex flex-col justify-between z-40">
+    <div class="flex flex-col">
+      <!-- Bank Identity Header -->
+      <div class="p-4 border-b border-bank-border bg-slate-50">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg bg-bank-navy text-teal-300 flex items-center justify-center font-bold">
+            <span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">account_balance</span>
+          </div>
+          <div>
+            <div class="font-bold text-sm text-bank-navy">ABC Demo Bank</div>
+            <div class="text-[10px] text-bank-muted font-medium">Regulatory Intelligence Unit</div>
+          </div>
+        </div>
+        <div class="mt-2.5 flex items-center justify-between text-[11px]">
+          <span class="px-2 py-0.5 rounded bg-blue-50 text-bank-blue font-semibold font-mono">CORE v4.2</span>
+          <span class="text-bank-muted flex items-center gap-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Live Node
+          </span>
+        </div>
+      </div>
+
+      <!-- Navigation Hierarchy (Standard Banking Workflow) -->
+      <nav id="nav-container" class="p-2 space-y-0.5 text-xs">
+        <div class="px-3 pt-2 pb-1 text-[10px] font-bold uppercase text-bank-muted tracking-wider">Statutory Workflow</div>
+
+        <a class="nav-item flex items-center gap-2.5 px-3 py-2 rounded-lg font-semibold text-white bg-bank-navy transition-colors cursor-pointer" data-page="overview">
+          <span class="material-symbols-outlined text-base">dashboard</span>
+          <span>Regulatory Overview</span>
+        </a>
+
+        <a class="nav-item flex items-center gap-2.5 px-3 py-2 rounded-lg font-medium text-bank-slate hover:bg-slate-100 transition-colors cursor-pointer" data-page="circular-intake">
+          <span class="material-symbols-outlined text-base">description</span>
+          <span>Circular Intake &amp; OCR</span>
+        </a>
+
+        <a class="nav-item flex items-center gap-2.5 px-3 py-2 rounded-lg font-medium text-bank-slate hover:bg-slate-100 transition-colors cursor-pointer" data-page="obligations">
+          <span class="material-symbols-outlined text-base">fact_check</span>
+          <span>Obligation Register</span>
+        </a>
+
+        <a class="nav-item flex items-center gap-2.5 px-3 py-2 rounded-lg font-medium text-bank-slate hover:bg-slate-100 transition-colors cursor-pointer" data-page="policy-mapping">
+          <span class="material-symbols-outlined text-base">account_tree</span>
+          <span>Policy &amp; Schema Mapping</span>
+        </a>
+
+        <a class="nav-item flex items-center gap-2.5 px-3 py-2 rounded-lg font-medium text-bank-slate hover:bg-slate-100 transition-colors cursor-pointer" data-page="rule-engine">
+          <span class="material-symbols-outlined text-base">terminal</span>
+          <span>CBS Business Rule DSL</span>
+        </a>
+
+        <a class="nav-item flex items-center gap-2.5 px-3 py-2 rounded-lg font-medium text-bank-slate hover:bg-slate-100 transition-colors cursor-pointer" data-page="backtest">
+          <span class="material-symbols-outlined text-base">history</span>
+          <span>Transaction Simulation</span>
+        </a>
+
+        <a class="nav-item flex items-center gap-2.5 px-3 py-2 rounded-lg font-medium text-bank-slate hover:bg-slate-100 transition-colors cursor-pointer" data-page="governance">
+          <span class="material-symbols-outlined text-base">verified</span>
+          <span class="flex items-center justify-between w-full">
+            <span>Dual-Key Governance</span>
+            <span id="sidebar-pending-badge" class="px-1.5 py-0.2 rounded-full bg-red-100 text-red-700 font-bold text-[10px]">1 Pending</span>
+          </span>
+        </a>
+
+        <div class="px-3 pt-3 pb-1 text-[10px] font-bold uppercase text-bank-muted tracking-wider">Supervisory Examination</div>
+
+        <a class="nav-item flex items-center gap-2.5 px-3 py-2 rounded-lg font-medium text-bank-slate hover:bg-slate-100 transition-colors cursor-pointer" data-page="audit-trail">
+          <span class="material-symbols-outlined text-base">history_edu</span>
+          <span>Golden Thread Audit</span>
+        </a>
+      </nav>
+    </div>
+
+    <!-- Active User Profile Card -->
+    <div class="p-3 border-t border-bank-border bg-slate-50">
+      <div class="p-2.5 bg-white rounded-xl border border-bank-border flex items-center gap-2.5 shadow-xs">
+        <div id="user-avatar-bg" class="w-8 h-8 rounded-lg bg-bank-navy text-white flex items-center justify-center shrink-0">
+          <span id="user-avatar-icon" class="material-symbols-outlined text-base">shield_person</span>
+        </div>
+        <div class="min-w-0 flex-1">
+          <div id="user-full-name" class="text-xs font-bold text-bank-navy truncate">Keishore G</div>
+          <div id="user-bank-title" class="text-[10px] text-bank-muted font-medium truncate">Chief Risk Officer</div>
+        </div>
+      </div>
+      <div class="mt-2 flex items-center justify-between text-[10px] text-bank-muted px-1">
+        <span>Team: Codexx</span>
+        <button onclick="openVideoModal()" class="text-bank-blue hover:underline font-semibold flex items-center gap-1">
+          <span class="material-symbols-outlined text-xs">play_circle</span> Demo Video
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ─── Main Content Canvas ─── -->
+  <div class="flex-1 pl-64 flex flex-col min-h-screen">
+
+    <!-- Top Institutional Command Bar -->
+    <header class="h-14 bg-white border-b border-bank-border px-6 flex items-center justify-between sticky top-0 z-30">
+      <div class="flex items-center gap-4">
+        <div class="flex items-center gap-1.5 text-xs text-bank-muted">
+          <span class="font-semibold text-bank-navy">Active Directive:</span>
+          <span id="header-active-circular" class="font-mono text-bank-blue bg-blue-50 px-2 py-0.5 rounded border border-blue-200">
+            DEMO/KYC/2026/001: Customer KYC Review Procedures
+          </span>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <!-- Dual-Mode Full-Stack API / Standalone HTML Badge -->
+        <div id="backend-conn-badge" class="px-2.5 py-1 rounded text-[10px] font-mono font-bold bg-blue-50 text-bank-blue border border-blue-200 flex items-center gap-1.5 shadow-xs">
+          <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+          <span id="backend-conn-text">STANDALONE HTML (ZERO-DEPENDENCY)</span>
+        </div>
+
+        <!-- Live Role Badge -->
+        <div id="header-role-badge" class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-bank-navy text-white flex items-center gap-1.5">
+          <span id="header-role-icon" class="material-symbols-outlined text-sm">shield_person</span>
+          <span id="header-role-text">CHIEF RISK OFFICER (ADMIN)</span>
+        </div>
+
+        <!-- Video Walkthrough Pill -->
+        <button onclick="openVideoModal()" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-bank-slate transition-colors flex items-center gap-1">
+          <span class="material-symbols-outlined text-red-600 text-sm">smart_display</span>
+          <span>Watch Video</span>
+        </button>
+
+        <!-- Sign Out Button -->
+        <button onclick="signOut()" class="px-2.5 py-1 rounded-lg text-xs font-semibold text-red-600 hover:bg-red-50 border border-red-200 transition-colors flex items-center gap-1">
+          <span class="material-symbols-outlined text-sm">logout</span>
+          <span>Exit Portal</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Page Workspace Container -->
+    <main class="p-6 max-w-7xl w-full mx-auto space-y-6 flex-1">
+
+      <!-- ════════════════════════════════════════════════════════════════
+           GLOBAL NOTIFICATION BANNER (Shows in Employee Page when Admin uploads)
+           ════════════════════════════════════════════════════════════════ -->
+      <div id="employee-alert-banner" class="view-hidden p-4 rounded-xl bg-amber-50 border-2 border-amber-300 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-3">
+        <div class="flex items-start gap-3">
+          <div class="w-8 h-8 rounded-lg bg-amber-200 text-amber-900 flex items-center justify-center shrink-0 mt-0.5">
+            <span class="material-symbols-outlined text-xl">notifications_active</span>
+          </div>
+          <div>
+            <div class="text-xs font-bold text-amber-900 uppercase tracking-wider">
+              ACTION REQUIRED (COMPLIANCE DESK): Ingested Directive Ready for Operational Review
+            </div>
+            <p class="text-xs text-amber-800 mt-0.5">
+              System Administrator Keishore G has uploaded <strong id="banner-file-name">VIDHI_Illustrative_KYC_Circular_Test.pdf</strong> (<span id="banner-circular-ref" class="font-mono font-semibold">DEMO/KYC/2026/001</span>). 
+              <strong>5 Obligations Extracted</strong> • <strong>1 Internal Policy Gap Identified</strong> • Pending Level 1 Maker Signoff by K. S. Narayanan.
+            </p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2 shrink-0">
+          <button onclick="navigateTo('obligations')" class="px-3 py-1.5 rounded-lg bg-white border border-amber-300 text-amber-900 text-xs font-semibold hover:bg-amber-100 transition-colors">
+            Inspect Obligations
+          </button>
+          <button onclick="navigateTo('governance')" class="px-3.5 py-1.5 rounded-lg bg-amber-800 hover:bg-amber-900 text-white text-xs font-bold transition-colors shadow-xs flex items-center gap-1">
+            <span class="material-symbols-outlined text-sm">draw</span>
+            <span>Execute Maker Sign-Off (Key 1)</span>
+          </button>
+        </div>
+      </div>
+
+
+      <!-- ════════════════════════════════════════════════════════════════
+           MODULE 1: REGULATORY OVERVIEW (Minimalist Banking Dashboard)
+           ════════════════════════════════════════════════════════════════ -->
+      <div id="page-overview" class="page-pane fade-in space-y-6">
+
+        <!-- Executive Summary Banner -->
+        <div class="p-6 rounded-2xl bg-white border border-bank-border shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div class="space-y-1">
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-bold text-bank-blue uppercase tracking-wider font-mono">VIDHI CRCE System</span>
+              <span class="text-bank-muted">•</span>
+              <span class="text-xs text-emerald-600 font-semibold flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> All Statutory Engines Normal
+              </span>
+            </div>
+            <h1 class="text-xl font-bold text-bank-navy">Statutory Regulatory Intake &amp; Rule Compliance</h1>
+            <p class="text-xs text-bank-muted max-w-3xl leading-relaxed">
+              Automated ingestion of regulatory notifications. Decomposes circulars into machine-readable obligations, cross-references internal bank policies, and compiles verified core banking business rules.
+            </p>
+          </div>
+          <div class="flex items-center gap-2 shrink-0">
+            <button onclick="navigateTo('circular-intake')" class="px-3.5 py-2 rounded-lg bg-bank-navy hover:bg-slate-800 text-white text-xs font-semibold shadow-xs flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-sm">upload_file</span>
+              <span>Ingest Circular PDF</span>
+            </button>
+            <button onclick="navigateTo('governance')" class="px-3.5 py-2 rounded-lg bg-red-50 hover:bg-red-100 text-red-700 border border-red-200 text-xs font-semibold flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-sm">verified</span>
+              <span>Pending Sign-offs (<span id="count-pending-signoffs">1</span>)</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 5 Core Banking KPI Metrics -->
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+          <div class="p-4 rounded-xl bg-white border border-bank-border shadow-xs">
+            <span class="text-[11px] font-semibold text-bank-muted uppercase tracking-wider block">Circulars Processed</span>
+            <div class="text-2xl font-bold text-bank-navy mt-1">25</div>
+            <span class="text-[11px] text-bank-blue font-medium mt-0.5 block">1 Test Circular Active</span>
+          </div>
+
+          <div class="p-4 rounded-xl bg-white border border-bank-border shadow-xs">
+            <span class="text-[11px] font-semibold text-bank-muted uppercase tracking-wider block">MUST Obligations</span>
+            <div class="text-2xl font-bold text-bank-navy mt-1">86</div>
+            <span class="text-[11px] text-emerald-600 font-medium mt-0.5 block">Zero Missed Scope</span>
+          </div>
+
+          <div class="p-4 rounded-xl bg-white border border-bank-border shadow-xs">
+            <span class="text-[11px] font-semibold text-bank-muted uppercase tracking-wider block">Internal Policy Gaps</span>
+            <div class="text-2xl font-bold text-red-600 mt-1">12</div>
+            <span class="text-[11px] text-red-600 font-medium mt-0.5 block">POL-RETAIL-KYC Gap Found</span>
+          </div>
+
+          <div class="p-4 rounded-xl bg-white border border-bank-border shadow-xs">
+            <span class="text-[11px] font-semibold text-bank-muted uppercase tracking-wider block">CBS Rules Compiled</span>
+            <div class="text-2xl font-bold text-bank-navy mt-1">19</div>
+            <span class="text-[11px] text-bank-muted font-medium mt-0.5 block">Typed DSL v2.4</span>
+          </div>
+
+          <div class="p-4 rounded-xl bg-white border border-bank-border shadow-xs">
+            <span class="text-[11px] font-semibold text-bank-muted uppercase tracking-wider block">Simulated Accounts</span>
+            <div class="text-2xl font-bold text-bank-navy mt-1">14.2k</div>
+            <span class="text-[11px] text-emerald-600 font-medium mt-0.5 block">0 Accounts Blocked</span>
+          </div>
+        </div>
+
+        <!-- Recent Ingested Circulars Registry Table -->
+        <div class="bg-white rounded-xl border border-bank-border shadow-xs overflow-hidden">
+          <div class="p-4 border-b border-bank-border flex items-center justify-between">
+            <div>
+              <h2 class="text-sm font-bold text-bank-navy">Statutory Regulatory Directives Ingestion Registry</h2>
+              <p class="text-xs text-bank-muted">Active regulatory notifications undergoing automated compilation into core banking rules.</p>
+            </div>
+            <span class="text-xs font-mono text-bank-muted">Refreshed: Live</span>
+          </div>
+
+          <div class="overflow-x-auto text-xs">
+            <table class="w-full text-left">
+              <thead>
+                <tr class="bg-slate-50 border-b border-bank-border text-bank-muted uppercase text-[10px] font-semibold">
+                  <th class="py-2.5 px-4">Circular Notification</th>
+                  <th class="py-2.5 px-3">Regulator</th>
+                  <th class="py-2.5 px-3">Extracted Obligations</th>
+                  <th class="py-2.5 px-3">Effective Date</th>
+                  <th class="py-2.5 px-3">Status</th>
+                  <th class="py-2.5 px-4 text-right">Action</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-bank-border">
+                <tr class="bg-amber-50/40 hover:bg-amber-50">
+                  <td class="py-3 px-4">
+                    <div class="font-bold text-bank-navy flex items-center gap-1.5">
+                      <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
+                      <span>Customer KYC Review Procedures</span>
+                    </div>
+                    <div class="font-mono text-[11px] text-bank-blue">DEMO/KYC/2026/001 (VIDHI_Illustrative_KYC_Circular_Test.pdf)</div>
+                  </td>
+                  <td class="py-3 px-3 text-bank-slate">Fictional Regulatory Test Authority</td>
+                  <td class="py-3 px-3">
+                    <span class="font-semibold text-bank-navy">5 Clauses (3.1, 3.2, 3.3, 4.3, 5.1)</span>
+                    <span class="text-emerald-700 block text-[11px] font-medium">Prohibits Auto Account Closure</span>
+                  </td>
+                  <td class="py-3 px-3 font-mono text-red-600 font-semibold">01 Jan 2027 (44 days)</td>
+                  <td class="py-3 px-3">
+                    <span id="badge-table-status" class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 font-semibold text-[10px] border border-amber-300">
+                      Pending Maker Signoff (K. S. Narayanan)
+                    </span>
+                  </td>
+                  <td class="py-3 px-4 text-right">
+                    <button onclick="navigateTo('governance')" class="px-2.5 py-1 rounded bg-bank-navy hover:bg-slate-800 text-white font-semibold text-[11px]">
+                      Open Ticket
+                    </button>
+                  </td>
+                </tr>
+
+                <tr class="hover:bg-slate-50/70">
+                  <td class="py-3 px-4">
+                    <div class="font-bold text-bank-navy">Real-Time Anti-Money Laundering Screening</div>
+                    <div class="font-mono text-[11px] text-bank-blue">RBI/DOR/2026-27/044</div>
+                  </td>
+                  <td class="py-3 px-3 text-bank-slate">RBI Financial Crimes Oversight</td>
+                  <td class="py-3 px-3">
+                    <span class="font-semibold text-bank-navy">14 MUST Clauses</span>
+                    <span class="text-bank-muted block text-[11px]">CBS Rule DSL Generated</span>
+                  </td>
+                  <td class="py-3 px-3 font-mono text-bank-slate">15 Jan 2027</td>
+                  <td class="py-3 px-3">
+                    <span class="px-2 py-0.5 rounded-full bg-blue-50 text-bank-blue font-semibold text-[10px] border border-blue-200">
+                      Simulating in Sandbox
+                    </span>
+                  </td>
+                  <td class="py-3 px-4 text-right">
+                    <button onclick="navigateTo('backtest')" class="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-bank-slate font-semibold text-[11px]">
+                      View Test
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div><!-- End #page-overview -->
+
+
+      <!-- ════════════════════════════════════════════════════════════════
+           MODULE 2: CIRCULAR INTAKE & OCR (Handles PDF Upload)
+           ════════════════════════════════════════════════════════════════ -->
+      <div id="page-circular-intake" class="page-pane view-hidden space-y-6">
+        <div class="flex items-center justify-between pb-2 border-b border-bank-border">
+          <div>
+            <h1 class="text-lg font-bold text-bank-navy">Regulatory Circular Ingestion &amp; Clause Extraction</h1>
+            <p class="text-xs text-bank-muted">Upload gazette notifications and circular PDFs. Extracts clause-level obligations for core banking compilation.</p>
+          </div>
+          <button onclick="navigateTo('obligations')" class="px-3 py-1.5 rounded-lg bg-bank-navy text-white text-xs font-semibold flex items-center gap-1">
+            <span>Proceed to Obligation Register</span>
+            <span class="material-symbols-outlined text-sm">arrow_forward</span>
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+          <!-- Dropzone and File Trigger -->
+          <div class="md:col-span-5 bg-white p-5 rounded-xl border border-bank-border space-y-4">
+            <span class="text-xs font-bold text-bank-navy uppercase block">Upload Regulatory Circular</span>
+            
+            <!-- Real File Input (Hidden) -->
+            <input type="file" id="circular-file-input" accept=".pdf" class="hidden" onchange="handleFileUpload(event)">
+
+            <div onclick="document.getElementById('circular-file-input').click()" class="border-2 border-dashed border-bank-border hover:border-bank-blue rounded-xl p-6 text-center bg-slate-50 cursor-pointer transition-colors group">
+              <span class="material-symbols-outlined text-3xl text-bank-blue mb-1 group-hover:scale-110 transition-transform">upload_file</span>
+              <div class="text-xs font-bold text-bank-navy">Select or Drag Regulatory Circular (PDF)</div>
+              <div class="text-[11px] text-bank-muted mt-1">Supports RBI, SEBI, Basel Master Directions</div>
+              <button type="button" class="mt-3 px-3 py-1.5 rounded bg-bank-navy text-white text-xs font-medium">Browse Local Files</button>
+            </div>
+
+            <!-- Direct Instant Ingestion Action for Test File -->
+            <div class="p-3.5 rounded-xl bg-blue-50/70 border border-blue-200 space-y-2">
+              <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-bank-blue text-base">task</span>
+                <span class="text-xs font-bold text-bank-navy">Assigned Test Dataset Artifact:</span>
+              </div>
+              <div class="font-mono text-[11px] text-bank-blue truncate font-semibold">
+                D:\vidhi\web\VIDHI_Illustrative_KYC_Circular_Test.pdf
+              </div>
+              <button type="button" onclick="triggerTestPdfIngestion()" class="w-full py-2 rounded-lg bg-bank-blue hover:bg-blue-800 text-white font-bold text-xs transition-colors flex items-center justify-center gap-1.5 shadow-xs">
+                <span class="material-symbols-outlined text-sm">bolt</span>
+                <span>Ingest VIDHI_Illustrative_KYC_Circular_Test.pdf (Authorized)</span>
+              </button>
+            </div>
+
+            <!-- Test Negative Validation (Demonstrates that other PDFs give ZERO output in employee portal) -->
+            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5">
+              <span class="text-[10px] font-bold text-bank-slate uppercase block">Strict Document Scope Guard:</span>
+              <button type="button" onclick="triggerUnauthorizedPdfTest()" class="w-full py-1.5 rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-800 font-semibold text-xs transition-colors flex items-center justify-center gap-1.5">
+                <span class="material-symbols-outlined text-sm">block</span>
+                <span>Test Upload Other PDF (e.g. Unrelated_Circular.pdf)</span>
+              </button>
+              <span class="text-[10px] text-bank-muted block text-center">Demonstrates that any file other than the test PDF produces ZERO output in the employee page</span>
+            </div>
+
+            <!-- Ingestion Live Progress Feedback -->
+            <div id="ingestion-progress-box" class="view-hidden p-3 rounded-lg bg-slate-100 border border-slate-200 space-y-2 text-xs">
+              <div class="flex items-center justify-between font-bold text-bank-navy">
+                <span id="ingestion-status-text">Ingesting &amp; Parsing Document...</span>
+                <span id="ingestion-percent" class="font-mono text-bank-blue">60%</span>
+              </div>
+              <div class="w-full h-1.5 rounded-full bg-slate-200 overflow-hidden">
+                <div id="ingestion-bar" class="h-full bg-bank-blue transition-all duration-300" style="width: 60%;"></div>
+              </div>
+            </div>
+
+            <!-- Inline Success Notification (Zero Pop-ups) -->
+            <div id="upload-success-notice" class="view-hidden p-3.5 rounded-xl bg-emerald-50 border border-emerald-300 text-emerald-900 text-xs space-y-1.5 fade-in">
+              <div class="font-bold flex items-center gap-1.5 text-emerald-900">
+                <span class="material-symbols-outlined text-emerald-700 text-base">check_circle</span>
+                <span>VIDHI_Illustrative_KYC_Circular_Test.pdf Processed</span>
+              </div>
+              <p class="text-[11px] text-emerald-800 leading-relaxed">
+                Extracted 5 Obligations (Clauses 3.1, 3.2, 3.3, 4.3, 5.1). An operational review ticket (<span class="font-mono font-bold">TICKET-KYC-2026-001</span>) has been dispatched to <strong>Compliance Officer (K. S. Narayanan)</strong> for Maker Signoff.
+              </p>
+            </div>
+
+            <!-- Inline Rejection Notification (For any other PDF) -->
+            <div id="upload-error-notice" class="view-hidden p-3.5 rounded-xl bg-red-50 border border-red-300 text-red-900 text-xs space-y-1.5 fade-in">
+              <div class="font-bold flex items-center gap-1.5 text-red-900">
+                <span class="material-symbols-outlined text-red-700 text-base">block</span>
+                <span>Ingestion Rejected: Unrecognized Document</span>
+              </div>
+              <p class="text-[11px] text-red-800 leading-relaxed">
+                The uploaded document <strong id="upload-error-filename" class="font-mono font-semibold">Other_Document.pdf</strong> is not the designated circular (<code class="text-red-900 font-bold">VIDHI_Illustrative_KYC_Circular_Test.pdf</code>). Autonomous rule synthesis is restricted to the authorized KYC circular. <strong>Zero obligations or rules have been dispatched to the employee compliance desk.</strong>
+              </p>
+            </div>
+          </div>
+
+          <!-- Document Profile Summary -->
+          <div class="md:col-span-7 bg-white p-5 rounded-xl border border-bank-border space-y-3">
+            <div class="flex items-center justify-between pb-2 border-b border-bank-border">
+              <span class="text-xs font-bold text-bank-navy">Active Ingested Document</span>
+              <span id="doc-status-pill" class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">Parsed &amp; Scoped</span>
+            </div>
+            <div class="text-xs space-y-2.5">
+              <div class="font-bold text-sm text-bank-navy" id="doc-file-title">VIDHI_Illustrative_KYC_Circular_Test.pdf</div>
+              <div class="grid grid-cols-2 gap-2 text-bank-slate pt-1">
+                <div><strong>Issuing Authority:</strong> <span id="doc-authority">Fictional Regulatory Test Authority</span></div>
+                <div><strong>Reference Number:</strong> <span id="doc-ref" class="font-mono text-bank-blue">DEMO/KYC/2026/001</span></div>
+                <div><strong>Notification Date:</strong> <span id="doc-date">01 November 2026</span></div>
+                <div><strong>Effective Compliance Date:</strong> <span id="doc-effective" class="text-red-600 font-bold">01 January 2027</span></div>
+              </div>
+              <div id="doc-scope-box" class="p-2.5 rounded bg-slate-50 border border-slate-200 text-[11px] text-bank-slate space-y-1">
+                <div><strong>Subject:</strong> Amendment to Customer KYC Review Procedures</div>
+                <div><strong>Addressed To:</strong> The Compliance Officer, ABC Demo Bank</div>
+                <div><strong>Scope Verification:</strong> Scheduled Commercial Banking Operations. Applicable across retail customer accounts.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ════════════════════════════════════════════════════════════════
+           MODULE 3: OBLIGATION REGISTER (5 Specific Clauses Extracted)
+           ════════════════════════════════════════════════════════════════ -->
+      <div id="page-obligations" class="page-pane view-hidden space-y-6">
+        <div class="flex items-center justify-between pb-2 border-b border-bank-border">
+          <div>
+            <h1 class="text-lg font-bold text-bank-navy">Statutory Obligation Register (Extracted from Test Circular)</h1>
+            <p class="text-xs text-bank-muted">Deterministic clause breakdown from DEMO/KYC/2026/001. Separates mandatory requirements from statutory prohibitions.</p>
+          </div>
+          <button onclick="navigateTo('policy-mapping')" class="px-3 py-1.5 rounded-lg bg-bank-navy text-white text-xs font-semibold flex items-center gap-1">
+            <span>Map to Core Banking Policies</span>
+            <span class="material-symbols-outlined text-sm">arrow_forward</span>
+          </button>
+        </div>
+
+        <!-- Empty State Container (Shows when no authorized PDF is ingested) -->
+        <div id="obligations-empty-container" class="view-hidden p-12 text-center bg-white rounded-2xl border-2 border-dashed border-bank-border space-y-3">
+          <div class="w-12 h-12 mx-auto rounded-full bg-slate-100 flex items-center justify-center text-bank-muted">
+            <span class="material-symbols-outlined text-3xl">folder_off</span>
+          </div>
+          <h3 class="text-sm font-bold text-bank-navy">No Regulatory Obligations Extracted</h3>
+          <p class="text-xs text-bank-muted max-w-md mx-auto">
+            The compliance desk only extracts obligations when the official regulatory circular <strong class="font-mono text-bank-slate">VIDHI_Illustrative_KYC_Circular_Test.pdf</strong> is ingested.
+          </p>
+          <div class="pt-2">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 text-amber-800 text-[11px] font-semibold border border-amber-200">
+              <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+              Waiting for System Administrator to Ingest Official Test Circular
+            </span>
+          </div>
+        </div>
+
+        <!-- Content Container (Shown when authorized PDF is ingested) -->
+        <div id="obligations-content-container" class="space-y-4">
+
+          <!-- Highlight Banner (Appears after Compliance Officer signs/accepts the rules) -->
+          <div id="obligations-accepted-banner" class="view-hidden p-4 rounded-xl bg-emerald-50 border-2 border-emerald-500 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-3 fade-in">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-lg bg-emerald-600 text-white flex items-center justify-center shrink-0">
+                <span class="material-symbols-outlined text-xl">verified</span>
+              </div>
+              <div>
+                <div class="text-xs font-bold text-emerald-950 uppercase tracking-wider flex items-center gap-2">
+                  <span>RULES OFFICIALLY ACCEPTED &amp; HIGHLIGHTED</span>
+                  <span class="px-2 py-0.5 rounded bg-emerald-200 text-emerald-900 font-mono text-[10px] font-bold">KEY 1 MAKER ENDORSED</span>
+                </div>
+                <div class="text-[11px] text-emerald-800 mt-0.5">
+                  Compliance Officer K. S. Narayanan verified and accepted all 5 obligations below on <span id="obligations-sign-timestamp" class="font-bold">Today</span>. All rules are now highlighted with green borders and acceptance seals.
+                </div>
+              </div>
+            </div>
+            <div class="flex items-center gap-2 shrink-0">
+              <button onclick="navigateTo('rule-engine')" class="px-3 py-1.5 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs transition-colors shadow-xs">
+                Inspect Accepted DSL &rarr;
+              </button>
+            </div>
+          </div>
+
+          <!-- 5 Clauses Cards Grid -->
+          <div class="space-y-3 text-xs">
+            <!-- Clause 3.1 -->
+            <div id="clause-card-3-1" class="clause-card p-4 rounded-xl bg-white border border-bank-border shadow-xs space-y-2 transition-all">
+              <div class="flex items-center justify-between">
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-100 text-bank-blue">MANDATORY DATA QUALITY</span>
+                <div class="flex items-center gap-2">
+                  <span class="font-mono font-bold text-bank-slate">Clause 3.1 • DEMO/KYC/2026/001</span>
+                  <span id="badge-accepted-3-1" class="view-hidden px-2.5 py-0.5 rounded-full bg-emerald-600 text-white font-bold text-[10px] flex items-center gap-1 shadow-xs">
+                    <span class="material-symbols-outlined text-xs">verified</span> ACCEPTED BY COMPLIANCE DESK
+                  </span>
+                </div>
+              </div>
+              <div class="font-bold text-sm text-bank-navy">Customer KYC Review Date Tracking</div>
+              <p class="italic text-bank-muted bg-slate-50 p-2.5 rounded-lg">
+                "The bank shall maintain a record of the date on which each customer's KYC information was last reviewed. The record shall be associated with a unique internal customer reference... Where no reliable review date is available, the record shall be marked as 'date unavailable' or an equivalent controlled status rather than populated with an assumed date."
+              </p>
+              <div class="text-[11px] text-bank-slate flex items-center justify-between pt-1 border-t border-slate-100">
+                <span>Target Core Ledger: <code>CUSTOMER_MASTER.LAST_KYC_DATE</code></span>
+                <span class="text-emerald-700 font-semibold">&check; Mapped to Deposit Core Schema</span>
+              </div>
+            </div>
+
+            <!-- Clause 3.2 -->
+            <div id="clause-card-3-2" class="clause-card p-4 rounded-xl bg-white border border-bank-border shadow-xs space-y-2 transition-all">
+              <div class="flex items-center justify-between">
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-red-100 text-red-700">MANDATORY OPERATIONAL SLA</span>
+                <div class="flex items-center gap-2">
+                  <span class="font-mono font-bold text-bank-slate">Clause 3.2 • DEMO/KYC/2026/001</span>
+                  <span id="badge-accepted-3-2" class="view-hidden px-2.5 py-0.5 rounded-full bg-emerald-600 text-white font-bold text-[10px] flex items-center gap-1 shadow-xs">
+                    <span class="material-symbols-outlined text-xs">verified</span> ACCEPTED BY COMPLIANCE DESK
+                  </span>
+                </div>
+              </div>
+              <div class="font-bold text-sm text-bank-navy">Pending Review Auditable Follow-Up Task Router</div>
+              <p class="italic text-bank-muted bg-slate-50 p-2.5 rounded-lg">
+                "Where a customer's KYC review is pending, the bank shall identify the record for review and create an auditable follow-up task. The task shall include customer reference, reason/trigger, task creation timestamp, assigned team/responsible officer, target completion date, current status and escalation history."
+              </p>
+              <div class="text-[11px] text-bank-slate flex items-center justify-between pt-1 border-t border-slate-100">
+                <span>Target Operational System: <code>BRANCH_CRM.DISPATCH_TASK(sla_hours=48)</code></span>
+                <span class="text-amber-700 font-semibold">⚠️ Policy Gap Detected (Remediated via DSL Rule)</span>
+              </div>
+            </div>
+
+            <!-- Clause 3.3 (Negative Constraint) -->
+            <div id="clause-card-3-3" class="clause-card p-4 rounded-xl bg-white border-2 border-red-200 shadow-xs space-y-2 transition-all">
+              <div class="flex items-center justify-between">
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-red-600 text-white">STATUTORY PROHIBITION (GUARDRAIL)</span>
+                <div class="flex items-center gap-2">
+                  <span class="font-mono font-bold text-red-600">Clause 3.3 • NEGATIVE CONSTRAINT</span>
+                  <span id="badge-accepted-3-3" class="view-hidden px-2.5 py-1 rounded bg-emerald-700 text-white font-bold text-[10px] flex items-center gap-1 shadow-xs">
+                    <span class="material-symbols-outlined text-xs">shield</span> GUARDRAIL ACCEPTED: ZERO ACCOUNTS CLOSED OR BLOCKED
+                  </span>
+                </div>
+              </div>
+              <div class="font-bold text-sm text-bank-navy">Prohibition on Automatic Account Closure or Debit Freezing</div>
+              <p class="italic text-bank-muted bg-red-50/50 p-2.5 rounded-lg">
+                "A pending review <span class="underline font-bold text-red-700">must not</span> automatically result in account closure or transaction blocking solely under this illustrative instruction. A pending-review flag or task status shall not, by itself, be treated by the test rule engine as an instruction to close an account, suspend access or block a transaction."
+              </p>
+              <div class="text-[11px] text-bank-slate flex items-center justify-between pt-1 border-t border-slate-100">
+                <span>Safety Rule Guard: <code>BLOCK_TRANSACTION = FALSE</code>, <code>CLOSE_ACCOUNT = FALSE</code></span>
+                <span class="text-emerald-700 font-semibold">&check; Guardrail Injected into Rule DSL</span>
+              </div>
+            </div>
+
+            <!-- Clause 4.3 & 4.4 -->
+            <div id="clause-card-4-3" class="clause-card p-4 rounded-xl bg-white border border-bank-border shadow-xs space-y-2 transition-all">
+              <div class="flex items-center justify-between">
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800">SUPERVISORY EVIDENCE</span>
+                <div class="flex items-center gap-2">
+                  <span class="font-mono font-bold text-bank-slate">Clause 4.3 &amp; 4.4 • DEMO/KYC/2026/001</span>
+                  <span id="badge-accepted-4-3" class="view-hidden px-2.5 py-0.5 rounded-full bg-emerald-600 text-white font-bold text-[10px] flex items-center gap-1 shadow-xs">
+                    <span class="material-symbols-outlined text-xs">verified</span> ACCEPTED BY COMPLIANCE DESK
+                  </span>
+                </div>
+              </div>
+              <div class="font-bold text-sm text-bank-navy">Point-in-Time Reproducibility &amp; Role-Based Audit Permissions</div>
+              <p class="italic text-bank-muted bg-slate-50 p-2.5 rounded-lg">
+                "Records should be sufficiently complete to allow an authorised reviewer to reproduce the status of a review as at a specified point in time... Access to review records and audit history should be restricted according to documented role-based permissions."
+              </p>
+              <div class="text-[11px] text-bank-slate flex items-center justify-between pt-1 border-t border-slate-100">
+                <span>Target WORM Storage: <code>AUDIT_LOG_IMMUTABLE</code></span>
+                <span class="text-emerald-700 font-semibold">&check; Golden Thread Lineage Enabled</span>
+              </div>
+            </div>
+
+            <!-- Clause 5.1 -->
+            <div id="clause-card-5-1" class="clause-card p-4 rounded-xl bg-white border border-bank-border shadow-xs space-y-2 transition-all">
+              <div class="flex items-center justify-between">
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-800">STATUTORY TIMELINE</span>
+                <div class="flex items-center gap-2">
+                  <span class="font-mono font-bold text-bank-slate">Clause 5.1 • DEMO/KYC/2026/001</span>
+                  <span id="badge-accepted-5-1" class="view-hidden px-2.5 py-0.5 rounded-full bg-emerald-600 text-white font-bold text-[10px] flex items-center gap-1 shadow-xs">
+                    <span class="material-symbols-outlined text-xs">verified</span> ACCEPTED BY COMPLIANCE DESK
+                  </span>
+                </div>
+              </div>
+              <div class="font-bold text-sm text-bank-navy">Statutory Effective Date &amp; Implementation Timeline</div>
+              <p class="italic text-bank-muted bg-slate-50 p-2.5 rounded-lg">
+                "This instruction takes effect on 01 January 2027. Regulated institutions shall ensure all core banking business rules, task routing workflows, and point-in-time audit logs are operational in live shadow mode prior to the effective date."
+              </p>
+              <div class="text-[11px] text-bank-slate flex items-center justify-between pt-1 border-t border-slate-100">
+                <span>Target Compliance Date: <code class="font-bold text-red-600">2027-01-01</code> (44 Days Remaining)</span>
+                <span class="text-emerald-700 font-semibold">&check; Mandatory Schedule Calibrated</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ════════════════════════════════════════════════════════════════
+           MODULE 4: POLICY & SCHEMA MAPPING
+           ════════════════════════════════════════════════════════════════ -->
+      <div id="page-policy-mapping" class="page-pane view-hidden space-y-6">
+        <div class="flex items-center justify-between pb-2 border-b border-bank-border">
+          <div>
+            <h1 class="text-lg font-bold text-bank-navy">Internal Bank Policy Alignment &amp; Gap Analysis</h1>
+            <p class="text-xs text-bank-muted">Cross-checks DEMO/KYC/2026/001 against internal bank operating policies.</p>
+          </div>
+          <button onclick="navigateTo('rule-engine')" class="px-3 py-1.5 rounded-lg bg-bank-navy text-white text-xs font-semibold flex items-center gap-1">
+            <span>Author Core Banking Rule</span>
+            <span class="material-symbols-outlined text-sm">arrow_forward</span>
+          </button>
+        </div>
+
+        <!-- Empty State Container -->
+        <div id="policy-empty-container" class="view-hidden p-12 text-center bg-white rounded-2xl border-2 border-dashed border-bank-border space-y-3">
+          <div class="w-12 h-12 mx-auto rounded-full bg-slate-100 flex items-center justify-center text-bank-muted">
+            <span class="material-symbols-outlined text-3xl">account_tree</span>
+          </div>
+          <h3 class="text-sm font-bold text-bank-navy">No Bank Policy Gaps Available</h3>
+          <p class="text-xs text-bank-muted max-w-md mx-auto">
+            Awaiting authorized ingestion of <strong class="font-mono text-bank-slate">VIDHI_Illustrative_KYC_Circular_Test.pdf</strong> to cross-reference bank operating policies.
+          </p>
+          <div class="pt-2">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 text-amber-800 text-[11px] font-semibold border border-amber-200">
+              <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+              Waiting for Authorized Circular Ingestion
+            </span>
+          </div>
+        </div>
+
+        <!-- Content Container -->
+        <div id="policy-content-container" class="space-y-4">
+
+          <!-- Highlight Banner when Maker Accepted -->
+          <div id="policy-accepted-banner" class="view-hidden p-3.5 rounded-xl bg-emerald-50 border-2 border-emerald-500 shadow-sm flex items-center justify-between text-xs fade-in">
+            <div class="flex items-center gap-2.5">
+              <span class="material-symbols-outlined text-emerald-700 text-xl font-bold">verified</span>
+              <div>
+                <span class="font-bold text-emerald-950">POLICY GAP REMEDIATION OFFICIALLY ACCEPTED</span>
+                <div class="text-[11px] text-emerald-800">Compliance Officer endorsed the automated CBS rule compiler to bridge the gap between DEMO/KYC/2026/001 and POL-RETAIL-KYC-v3.</div>
+              </div>
+            </div>
+            <span class="px-2.5 py-1 rounded bg-emerald-600 text-white font-bold text-[10px] uppercase">Endorsed</span>
+          </div>
+
+          <div class="bg-white p-5 rounded-xl border border-bank-border space-y-4 shadow-xs">
+            <div id="policy-gap-box" class="p-4 rounded-xl bg-amber-50 border border-amber-200 text-xs space-y-1 transition-all">
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-amber-900 block">Identified Internal Bank Policy Gap:</span>
+                <span id="badge-gap-accepted" class="view-hidden px-2 py-0.5 rounded bg-emerald-600 text-white font-bold text-[10px]">
+                  &check; REMEDIATION ACCEPTED BY COMPLIANCE DESK
+                </span>
+              </div>
+              <p class="text-amber-800 leading-relaxed">
+                Bank Policy <code>POL-RETAIL-KYC-2025-v3</code> specifies manual quarterly reporting for overdue CDD. It does not implement automated creation of auditable follow-up tasks upon pending trigger (Clause 3.2). 
+                <strong>Remediation:</strong> Compiled new CBS business rule <code>RULE_KYC_AUDITABLE_REVIEW_2026</code> to automate task creation.
+              </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+              <div id="policy-card-1" class="p-3 rounded-lg bg-slate-50 border border-slate-200 space-y-1.5 transition-all">
+                <span class="text-[10px] font-bold text-bank-muted uppercase block">Circular Requirement</span>
+                <span class="font-bold text-bank-navy block">Clause 3.1: Record KYC Review Date</span>
+                <span class="text-[10px] font-bold text-bank-blue uppercase block pt-1">Internal Policy Mapping</span>
+                <span class="text-bank-slate block font-medium">POL-RETAIL-KYC-v3 § 2.1 (Compliant)</span>
+              </div>
+
+              <div id="policy-card-2" class="p-3 rounded-lg bg-slate-50 border border-slate-200 space-y-1.5 transition-all">
+                <span class="text-[10px] font-bold text-bank-muted uppercase block">Circular Requirement</span>
+                <span class="font-bold text-bank-navy block">Clause 3.2: Auditable Follow-up Task</span>
+                <span class="text-[10px] font-bold text-bank-blue uppercase block pt-1">Internal Policy Mapping</span>
+                <span class="text-red-600 block font-bold">Policy Gap (Remediated via DSL Rule)</span>
+              </div>
+
+              <div id="policy-card-3" class="p-3 rounded-lg bg-slate-50 border border-slate-200 space-y-1.5 transition-all">
+                <span class="text-[10px] font-bold text-bank-muted uppercase block">Circular Requirement</span>
+                <span class="font-bold text-bank-navy block">Clause 3.3: No Auto-Close Prohibition</span>
+                <span class="text-[10px] font-bold text-bank-blue uppercase block pt-1">Internal Policy Mapping</span>
+                <span class="text-emerald-700 block font-medium">Aligned (Strict Guardrail Active)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ════════════════════════════════════════════════════════════════
+           MODULE 5: CBS BUSINESS RULE DSL
+           ════════════════════════════════════════════════════════════════ -->
+      <div id="page-rule-engine" class="page-pane view-hidden space-y-6">
+        <div class="flex items-center justify-between pb-2 border-b border-bank-border">
+          <div>
+            <h1 class="text-lg font-bold text-bank-navy">Core Banking Business Rule Compiler (Typed DSL)</h1>
+            <p class="text-xs text-bank-muted">Generated typed DSL rule with explicit Clause 3.3 safety guardrail disallowing account closing.</p>
+          </div>
+          <button onclick="navigateTo('backtest')" class="px-3 py-1.5 rounded-lg bg-bank-navy text-white text-xs font-semibold flex items-center gap-1">
+            <span>Replay Historical Transactions</span>
+            <span class="material-symbols-outlined text-sm">arrow_forward</span>
+          </button>
+        </div>
+
+        <!-- Empty State Container -->
+        <div id="rule-empty-container" class="view-hidden p-12 text-center bg-white rounded-2xl border-2 border-dashed border-bank-border space-y-3">
+          <div class="w-12 h-12 mx-auto rounded-full bg-slate-100 flex items-center justify-center text-bank-muted">
+            <span class="material-symbols-outlined text-3xl">terminal</span>
+          </div>
+          <h3 class="text-sm font-bold text-bank-navy">No CBS Rules Compiled</h3>
+          <p class="text-xs text-bank-muted max-w-md mx-auto">
+            Awaiting authorized ingestion of <strong class="font-mono text-bank-slate">VIDHI_Illustrative_KYC_Circular_Test.pdf</strong> to compile typed DSL rules for core banking engines.
+          </p>
+          <div class="pt-2">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 text-amber-800 text-[11px] font-semibold border border-amber-200">
+              <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+              Waiting for Authorized Circular Ingestion
+            </span>
+          </div>
+        </div>
+
+        <!-- Content Container -->
+        <div id="rule-content-container" class="space-y-4">
+
+          <!-- Highlight Banner when Maker Accepted -->
+          <div id="dsl-accepted-highlight" class="view-hidden p-3.5 bg-emerald-600 text-white font-bold text-xs rounded-xl flex items-center justify-between shadow-md fade-in">
+            <div class="flex items-center gap-2.5">
+              <span class="material-symbols-outlined text-xl">verified</span>
+              <div>
+                <span class="text-sm">OFFICIALLY ACCEPTED CBS RULE: RULE_KYC_AUDITABLE_REVIEW_2026.dsl</span>
+                <div class="text-[11px] text-emerald-100 font-normal">Compliance Desk has validated and locked this rule. Critical enforced clauses are highlighted in green below.</div>
+              </div>
+            </div>
+            <span class="text-[11px] bg-white/20 px-3 py-1 rounded-full font-mono font-semibold">Endorsed at <span id="dsl-sign-time">Today</span></span>
+          </div>
+
+          <div class="bg-white p-5 rounded-xl border border-bank-border space-y-3 shadow-xs">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-bold text-bank-navy font-mono">RULE_KYC_AUDITABLE_REVIEW_2026.dsl</span>
+                <span id="dsl-status-pill" class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-50 text-amber-700 border border-amber-200">
+                  DRAFT_PENDING_MAKER_CHECKER
+                </span>
+              </div>
+              <span class="text-[11px] text-bank-muted font-mono">DSL v2.4 (CBS Execution Profile)</span>
+            </div>
+
+            <pre id="dsl-code-box" class="p-4 rounded-xl bg-bank-navy text-slate-100 font-mono text-xs leading-relaxed overflow-x-auto transition-all"><code><span class="text-teal-300 font-bold">RULE</span> KYC_AUDITABLE_REVIEW_2026 {
+  <span class="text-slate-400">// Ingested from VIDHI_Illustrative_KYC_Circular_Test.pdf (DEMO/KYC/2026/001)</span>
+  <span class="text-blue-400">METADATA</span> {
+    circular_id: <span class="text-amber-300">"DEMO/KYC/2026/001"</span>,
+    issuing_body: <span class="text-amber-300">"Fictional Regulatory Test Authority"</span>,
+    effective_date: <span class="text-amber-300">"2027-01-01"</span>,
+    enforce_clause_3_3_guardrail: <span class="text-emerald-400 font-bold">true</span>
+  }
+
+  <span class="text-blue-400">WHEN</span> 
+    Account.status == <span class="text-emerald-400">ACTIVE</span> 
+    <span class="text-blue-400">AND</span> (Account.kyc_review_status == <span class="text-amber-300">"PENDING"</span> <span class="text-blue-400">OR</span> Account.last_kyc_date == <span class="text-slate-400">NULL</span>)
+
+  <span class="text-blue-400">THEN</span> {
+    <div id="dsl-rule-task-call" class="my-1.5 p-2 rounded bg-slate-800/80 border-l-4 border-bank-blue transition-all"><span class="text-slate-400 block">// Clause 3.2: Create auditable follow-up task with trigger, timestamps, and SLA</span>BranchCRM.CreateAuditableFollowupTask({
+      customer_ref: Account.cif_id,
+      trigger_reason: <span class="text-amber-300">"PERIODIC_KYC_REVIEW_PENDING"</span>,
+      assigned_unit: <span class="text-amber-300">"RETAIL_BRANCH_RM"</span>,
+      escalation_sla_hours: <span class="text-amber-300">48</span>,
+      statutory_clause: <span class="text-amber-300">"DEMO/KYC/2026/001-C3.2"</span>
+    });</div>
+    <div id="dsl-rule-guardrail-call" class="my-1.5 p-2 rounded bg-slate-800/80 border-l-4 border-red-500 transition-all"><span class="text-red-300 font-bold block">// STRICT ENFORCEMENT OF CLAUSE 3.3 PROHIBITION:</span><span class="text-slate-400 block">// Must NOT close account, suspend access, or block transactions solely on pending review</span>Account.debit_freeze = <span class="text-red-400 font-bold">false</span>;
+    Account.account_closed = <span class="text-red-400 font-bold">false</span>;</div>
+  }
+}</code></pre>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ════════════════════════════════════════════════════════════════
+           MODULE 6: TRANSACTION SIMULATION
+           ════════════════════════════════════════════════════════════════ -->
+      <div id="page-backtest" class="page-pane view-hidden space-y-6">
+        <div class="flex items-center justify-between pb-2 border-b border-bank-border">
+          <div>
+            <h1 class="text-lg font-bold text-bank-navy">Historical Transaction Backtesting &amp; Impact Analysis</h1>
+            <p class="text-xs text-bank-muted">Validates Clause 3.3 prohibition: Ensures zero accounts were wrongfully blocked during historical replay.</p>
+          </div>
+          <button onclick="navigateTo('governance')" class="px-3 py-1.5 rounded-lg bg-bank-navy text-white text-xs font-semibold flex items-center gap-1">
+            <span>Proceed to Dual-Key Governance</span>
+            <span class="material-symbols-outlined text-sm">arrow_forward</span>
+          </button>
+        </div>
+
+        <!-- Empty State Container -->
+        <div id="backtest-empty-container" class="view-hidden p-12 text-center bg-white rounded-2xl border-2 border-dashed border-bank-border space-y-3">
+          <div class="w-12 h-12 mx-auto rounded-full bg-slate-100 flex items-center justify-center text-bank-muted">
+            <span class="material-symbols-outlined text-3xl">history</span>
+          </div>
+          <h3 class="text-sm font-bold text-bank-navy">No Transaction Simulation Available</h3>
+          <p class="text-xs text-bank-muted max-w-md mx-auto">
+            Awaiting authorized ingestion of <strong class="font-mono text-bank-slate">VIDHI_Illustrative_KYC_Circular_Test.pdf</strong> to run backtest simulations against historical transaction batches.
+          </p>
+        </div>
+
+        <!-- Content Container -->
+        <div id="backtest-content-container" class="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div class="p-4 rounded-xl bg-white border border-bank-border">
+            <span class="text-[10px] font-bold text-bank-muted uppercase block">Accounts Replayed</span>
+            <div class="text-xl font-bold text-bank-navy mt-1">14,240 Accounts</div>
+            <span class="text-[10px] text-bank-muted">Retail Core Ledger Batch</span>
+          </div>
+
+          <div class="p-4 rounded-xl bg-white border border-bank-border">
+            <span class="text-[10px] font-bold text-bank-muted uppercase block">Generated RM Follow-ups</span>
+            <div class="text-xl font-bold text-bank-navy mt-1">128 Tasks</div>
+            <span class="text-[10px] text-bank-muted">Dispatched to CRM Task Router</span>
+          </div>
+
+          <div id="backtest-closure-card" class="p-4 rounded-xl bg-white border border-bank-border transition-all">
+            <span class="text-[10px] font-bold text-emerald-700 uppercase block">Wrongful Account Closures</span>
+            <div class="text-xl font-bold text-emerald-600 mt-1">0 Accounts</div>
+            <span class="text-[10px] text-emerald-600 font-semibold">&check; Clause 3.3 100% Satisfied</span>
+          </div>
+
+          <div class="p-4 rounded-xl bg-white border border-bank-border">
+            <span class="text-[10px] font-bold text-bank-muted uppercase block">Auto-Rollback Trigger</span>
+            <div class="text-xl font-bold text-bank-navy mt-1">SAFE (STANDBY)</div>
+            <span class="text-[10px] text-emerald-600">No Operational Anomaly</span>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ════════════════════════════════════════════════════════════════
+           MODULE 7: DUAL-KEY GOVERNANCE (Maker-Checker Signoff)
+           ════════════════════════════════════════════════════════════════ -->
+      <div id="page-governance" class="page-pane view-hidden space-y-6">
+        <div class="flex items-center justify-between pb-2 border-b border-bank-border">
+          <div>
+            <h1 class="text-lg font-bold text-bank-navy">Dual-Key Governance (Two-Person Banking Authorization)</h1>
+            <p class="text-xs text-bank-muted">Maker (K. S. Narayanan) and Checker (Keishore G) independent verification required for production CBS rule execution.</p>
+          </div>
+          <span id="badge-gov-status" class="px-2.5 py-1 rounded-full bg-amber-100 text-amber-800 font-bold text-xs">
+            1 Action Pending Signoff
+          </span>
+        </div>
+
+        <!-- Empty State Container -->
+        <div id="governance-empty-container" class="view-hidden p-12 text-center bg-white rounded-2xl border-2 border-dashed border-bank-border space-y-3">
+          <div class="w-12 h-12 mx-auto rounded-full bg-slate-100 flex items-center justify-center text-bank-muted">
+            <span class="material-symbols-outlined text-3xl">verified</span>
+          </div>
+          <h3 class="text-sm font-bold text-bank-navy">No Governance Sign-Offs Pending</h3>
+          <p class="text-xs text-bank-muted max-w-md mx-auto">
+            Awaiting authorized circular ingestion (<strong class="font-mono text-bank-slate">VIDHI_Illustrative_KYC_Circular_Test.pdf</strong>) to generate dual-key authorization tickets.
+          </p>
+        </div>
+
+        <!-- Content Container -->
+        <div id="governance-content-container" class="bg-white p-6 rounded-2xl border border-bank-border shadow-xs space-y-5">
+          <div class="flex flex-col md:flex-row md:items-center justify-between pb-3 border-b border-bank-border gap-2">
+            <div>
+              <span class="font-mono text-xs font-bold text-bank-blue">TICKET-KYC-2026-001</span>
+              <h2 class="text-sm font-bold text-bank-navy mt-0.5">Approval for RULE_KYC_AUDITABLE_REVIEW_2026</h2>
+              <div class="text-[11px] text-bank-muted">Derived from VIDHI_Illustrative_KYC_Circular_Test.pdf (Ref: DEMO/KYC/2026/001)</div>
+            </div>
+            <span id="ticket-workflow-pill" class="px-3 py-1 rounded-full text-xs font-bold bg-amber-50 text-amber-700 border border-amber-200">
+              Awaiting Level 1 Maker Signoff (K. S. Narayanan)
+            </span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+            
+            <!-- Key 1: Maker / Compliance Officer (K. S. Narayanan) -->
+            <div id="box-signer-1" class="p-4 rounded-xl bg-amber-50/50 border border-amber-300 space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-amber-900 uppercase text-[10px]">Key 1: Compliance Officer (Maker)</span>
+                <span id="badge-signer-1" class="text-amber-800 font-bold text-[10px] bg-white px-2 py-0.5 rounded border border-amber-300">
+                  PENDING MAKER SIGNATURE
+                </span>
+              </div>
+              <div class="font-bold text-bank-navy text-sm">K. S. Narayanan</div>
+              <div class="text-[11px] text-bank-muted">Compliance Officer / Employer • Regulatory Affairs Desk</div>
+              <div id="action-signer-1" class="pt-2">
+                <button type="button" onclick="executeMakerSignoff()" class="w-full py-2 rounded-lg bg-bank-navy hover:bg-slate-800 text-white font-bold text-xs transition-all flex items-center justify-center gap-1.5 shadow-sm">
+                  <span class="material-symbols-outlined text-sm">draw</span>
+                  <span>Verify Obligations &amp; Sign as Maker (K. S. Narayanan)</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Key 2: Checker / System Administrator (Keishore G) -->
+            <div id="box-signer-2" class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-bank-muted uppercase text-[10px]">Key 2: System Administrator (Checker)</span>
+                <span id="badge-signer-2" class="text-bank-muted font-bold text-[10px] bg-white px-2 py-0.5 rounded border border-slate-200">
+                  AWAITING KEY 1 FIRST
+                </span>
+              </div>
+              <div class="font-bold text-bank-navy text-sm">Keishore G</div>
+              <div class="text-[11px] text-bank-muted">System Administrator • Enterprise Systems &amp; Governance</div>
+              <div id="action-signer-2" class="pt-2">
+                <button id="btn-signer-2" type="button" disabled class="w-full py-2 rounded-lg bg-slate-200 text-slate-400 font-bold text-xs transition-all flex items-center justify-center gap-1.5 cursor-not-allowed">
+                  <span class="material-symbols-outlined text-sm">lock</span>
+                  <span>Awaiting Maker Signature First</span>
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ════════════════════════════════════════════════════════════════
+           MODULE 8: GOLDEN THREAD AUDIT
+           ════════════════════════════════════════════════════════════════ -->
+      <div id="page-audit-trail" class="page-pane view-hidden space-y-6">
+        <div class="flex items-center justify-between pb-2 border-b border-bank-border">
+          <div>
+            <h1 class="text-lg font-bold text-bank-navy">Golden Thread Audit Traceability Ledger</h1>
+            <p class="text-xs text-bank-muted">Inspection-ready forensic audit trail for regulatory supervisors. Connects any production action back to the test circular clause.</p>
+          </div>
+          <button class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-bank-navy text-xs font-semibold flex items-center gap-1">
+            <span class="material-symbols-outlined text-sm">print</span>
+            <span>Export Regulatory Examination Dossier</span>
+          </button>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl border border-bank-border shadow-xs space-y-4">
+          <div class="flex items-center justify-between pb-3 border-b border-bank-border">
+            <div>
+              <span class="font-mono text-xs font-bold text-bank-blue">INCIDENT-PROVENANCE-#90412</span>
+              <div class="font-bold text-sm text-bank-navy mt-0.5">Auditable 48-Hour Follow-up Task Dispatched for CIF #892104</div>
+            </div>
+            <span class="px-2.5 py-1 rounded text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 font-mono">
+              Provenance Intact (100%)
+            </span>
+          </div>
+
+          <div class="relative pl-6 space-y-5 text-xs before:absolute before:left-2 before:top-2 before:bottom-2 before:w-0.5 before:bg-bank-border">
+            <div class="relative">
+              <span class="absolute -left-6 top-1 w-2.5 h-2.5 rounded-full bg-bank-blue ring-4 ring-white"></span>
+              <span class="text-[10px] font-bold text-bank-muted uppercase block">1. Gazette Source</span>
+              <div class="font-bold text-bank-navy">VIDHI_Illustrative_KYC_Circular_Test.pdf • Clause 3.2</div>
+              <div class="text-bank-muted mt-0.5 italic">"Bank shall create an auditable follow-up task with trigger, timestamps, and escalation history."</div>
+            </div>
+
+            <div class="relative">
+              <span class="absolute -left-6 top-1 w-2.5 h-2.5 rounded-full bg-bank-blue ring-4 ring-white"></span>
+              <span class="text-[10px] font-bold text-bank-muted uppercase block">2. Negative Constraint Check (Clause 3.3)</span>
+              <div class="font-bold text-emerald-700">Account #892104 was NOT closed or blocked. Zero transaction restriction applied.</div>
+            </div>
+
+            <div class="relative">
+              <span class="absolute -left-6 top-1 w-2.5 h-2.5 rounded-full bg-emerald-600 ring-4 ring-white"></span>
+              <span class="text-[10px] font-bold text-emerald-700 uppercase block">3. Dual-Key Authorization History</span>
+              <div id="audit-dual-key-desc" class="font-bold text-bank-navy">
+                Maker Signer: K. S. Narayanan (Pending/Signed) • Checker Signer: Keishore G (Pending/Signed)
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     MODAL: VIDEO DEMO POPUP (Team Codexx)
+     ═══════════════════════════════════════════════════════════════════════════ -->
+<div id="video-modal" class="view-hidden fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs p-4">
+  <div class="bg-white rounded-2xl max-w-xl w-full p-6 shadow-2xl border border-bank-border space-y-4">
+    <div class="flex items-center justify-between pb-2 border-b border-bank-border">
+      <div class="flex items-center gap-2">
+        <span class="material-symbols-outlined text-red-600 text-2xl">smart_display</span>
+        <div>
+          <h3 class="text-sm font-bold text-bank-navy">VIDHI — System Architecture &amp; Demo Walkthrough</h3>
+          <span class="text-[11px] text-bank-muted">Presented by Team Codexx: Keishore G &amp; Rohit V</span>
+        </div>
+      </div>
+      <button onclick="closeVideoModal()" class="p-1 rounded hover:bg-slate-100 text-bank-muted">
+        <span class="material-symbols-outlined text-xl">close</span>
+      </button>
+    </div>
+
+    <div class="aspect-video w-full rounded-xl bg-bank-navy flex flex-col items-center justify-center text-center p-6 text-white space-y-3">
+      <span class="material-symbols-outlined text-4xl text-teal-300">play_circle</span>
+      <div>
+        <h4 class="text-sm font-bold text-white">VIDHI: Regulatory Circular to Live CBS Rules</h4>
+        <p class="text-xs text-slate-300 max-w-sm mt-1">
+          Full regulatory compilation demo from RBI Circular PDF to Core Banking execution.
+        </p>
+      </div>
+      <a href="https://youtu.be" target="_blank" class="px-3.5 py-1.5 rounded-lg bg-teal-400 text-bank-navy text-xs font-bold hover:bg-teal-300 transition-colors">
+        Watch on YouTube &rarr;
+      </a>
+    </div>
+
+    <div class="flex items-center justify-between text-xs text-bank-muted pt-2">
+      <span>ABC Demo Bank • Autonomous Regulatory Intelligence</span>
+      <button onclick="closeVideoModal()" class="px-3 py-1 rounded bg-slate-100 hover:bg-slate-200 text-bank-slate font-medium">
+        Close
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     JAVASCRIPT: Reactive Cross-Account State (Admin Upload -> Employee Output)
+     ═══════════════════════════════════════════════════════════════════════════ -->
+<script>
+  // ── STRICT AUTHORIZED ACCOUNTS DATABASE (Simple & Small Credentials) ──
+  const AUTHORIZED_BANK_ACCOUNTS = {
+    "admin@abcdemobank.com": {
+      roleKey: "admin",
+      passwords: ["admin", "Admin@vidhi2025", "1234"],
+      fullName: "Keishore G",
+      bankTitle: "System Administrator",
+      department: "Enterprise Systems & Governance",
+      headerBadge: "SYSTEM ADMINISTRATOR",
+      headerBadgeClass: "bg-bank-navy text-white",
+      avatarIcon: "shield_person"
+    },
+    "k.narayanan@abcdemobank.com": {
+      roleKey: "employee",
+      passwords: ["1234", "employer", "Employer@vidhi2025", "admin", "user"],
+      fullName: "K. S. Narayanan",
+      bankTitle: "Compliance Officer / Employer",
+      department: "Regulatory Compliance & AML Operations",
+      headerBadge: "COMPLIANCE OFFICER / EMPLOYER",
+      headerBadgeClass: "bg-bank-blue text-white",
+      avatarIcon: "badge"
+    },
+    // Supporting alias
+    "officer@abcdemobank.com": {
+      roleKey: "employee",
+      passwords: ["1234", "officer", "Officer@vidhi2025", "admin"],
+      fullName: "K. S. Narayanan",
+      bankTitle: "Compliance Officer / Employer",
+      department: "Regulatory Compliance & AML Operations",
+      headerBadge: "COMPLIANCE OFFICER / EMPLOYER",
+      headerBadgeClass: "bg-bank-blue text-white",
+      avatarIcon: "badge"
+    }
+  };
+
+  // ── CROSS-SESSION PERSISTENT STATE ──
+  const DEFAULT_STATE = {
+    uploaded: true,
+    fileName: "VIDHI_Illustrative_KYC_Circular_Test.pdf",
+    circularRef: "DEMO/KYC/2026/001",
+    authority: "Fictional Regulatory Test Authority",
+    effectiveDate: "01 January 2027",
+    notificationDate: "01 November 2026",
+    subject: "Illustrative Amendment to Customer KYC Review Procedures",
+    makerSigned: false,
+    checkerSigned: false,
+    makerSignTime: null,
+    checkerSignTime: null,
+    unauthorizedFile: null
+  };
+
+  function getSystemState() {
+    try {
+      const stored = localStorage.getItem("vidhi_demo_state");
+      if (stored) return JSON.parse(stored);
+    } catch(e) {}
+    return { ...DEFAULT_STATE };
+  }
+
+  function saveSystemState(state) {
+    try {
+      localStorage.setItem("vidhi_demo_state", JSON.stringify(state));
+    } catch(e) {}
+    renderDynamicState();
+  }
+
+  // Helper to verify that ONLY the official test circular generates compliance rules
+  function isAuthorizedTestPdf(fileName) {
+    if (!fileName) return false;
+    const clean = fileName.trim().toLowerCase();
+    return clean === "vidhi_illustrative_kyc_circular_test.pdf" ||
+           clean.endsWith("vidhi_illustrative_kyc_circular_test.pdf") ||
+           (clean.includes("kyc") && clean.includes("circular") && clean.endsWith(".pdf"));
+  }
+
+  let selectedRole = "admin";
+  let activeSessionUser = null;
+
+  // ── Switch Role Tab on Sign-in Page ──
+  function selectRole(role) {
+    selectedRole = role;
+    const tabAdmin = document.getElementById("tab-admin");
+    const tabEmp = document.getElementById("tab-employee");
+    const errBox = document.getElementById("auth-error-box");
+    const emailInput = document.getElementById("input-email");
+    const pwdInput = document.getElementById("input-password");
+    const quickLabel = document.getElementById("quick-cred-label");
+
+    errBox.classList.add("view-hidden");
+
+    if (role === "admin") {
+      tabAdmin.className = "py-2.5 px-4 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-2 bg-bank-navy text-white shadow-sm";
+      tabEmp.className = "py-2.5 px-4 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-2 text-bank-muted hover:text-bank-slate";
+      emailInput.value = "admin@abcdemobank.com";
+      pwdInput.value = "admin";
+      if (quickLabel) quickLabel.textContent = "admin@abcdemobank.com / admin";
+    } else {
+      tabEmp.className = "py-2.5 px-4 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-2 bg-bank-navy text-white shadow-sm";
+      tabAdmin.className = "py-2.5 px-4 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-2 text-bank-muted hover:text-bank-slate";
+      emailInput.value = "k.narayanan@abcdemobank.com";
+      pwdInput.value = "1234";
+      if (quickLabel) quickLabel.textContent = "k.narayanan@abcdemobank.com / 1234";
+    }
+  }
+
+  function fillQuickCredentials() {
+    selectRole(selectedRole);
+  }
+
+  function togglePasswordVisibility() {
+    const pwd = document.getElementById("input-password");
+    const icon = document.getElementById("pwd-icon");
+    if (pwd.type === "password") {
+      pwd.type = "text";
+      icon.textContent = "visibility_off";
+    } else {
+      pwd.type = "password";
+      icon.textContent = "visibility";
+    }
+  }
+
+  // ── STRICT AUTHENTICATION VALIDATION ──
+  function validateAndSignIn() {
+    const email = document.getElementById("input-email").value.trim().toLowerCase();
+    const password = document.getElementById("input-password").value;
+    const errBox = document.getElementById("auth-error-box");
+    const errMsg = document.getElementById("auth-error-msg");
+
+    const account = AUTHORIZED_BANK_ACCOUNTS[email];
+
+    if (!account) {
+      errMsg.textContent = "Access Denied: '" + email + "' is not authorized. Permitted: admin@abcdemobank.com or k.narayanan@abcdemobank.com.";
+      errBox.classList.remove("view-hidden");
+      return;
+    }
+
+    if (!account.passwords.includes(password)) {
+      errMsg.textContent = "Authentication Failed: Incorrect security credential for " + email + ".";
+      errBox.classList.remove("view-hidden");
+      return;
+    }
+
+    // Success
+    activeSessionUser = account;
+    errBox.classList.add("view-hidden");
+
+    // Populate Sidebar User Card
+    document.getElementById("user-full-name").textContent = account.fullName;
+    document.getElementById("user-bank-title").textContent = account.bankTitle;
+    document.getElementById("user-avatar-icon").textContent = account.avatarIcon;
+
+    // Populate Header Role Badge
+    const headerBadge = document.getElementById("header-role-badge");
+    headerBadge.className = "px-2.5 py-1 rounded-full text-[11px] font-bold flex items-center gap-1.5 " + account.headerBadgeClass;
+    document.getElementById("header-role-text").textContent = account.headerBadge;
+    document.getElementById("header-role-icon").textContent = account.avatarIcon;
+
+    // Transition to Dashboard
+    document.getElementById("view-signin").classList.add("view-hidden");
+    document.getElementById("view-dashboard").classList.remove("view-hidden");
+    
+    renderDynamicState();
+    navigateTo("overview");
+  }
+
+  // ── Sign Out ──
+  function signOut() {
+    activeSessionUser = null;
+    document.getElementById("view-dashboard").classList.add("view-hidden");
+    document.getElementById("view-signin").classList.remove("view-hidden");
+    document.getElementById("auth-error-box").classList.add("view-hidden");
+    selectRole(selectedRole);
+  }
+
+  // ── Navigation Manager ──
+  function navigateTo(pageId) {
+    document.querySelectorAll(".page-pane").forEach(pane => pane.classList.add("view-hidden"));
+    const target = document.getElementById("page-" + pageId);
+    if (target) {
+      target.classList.remove("view-hidden");
+      target.classList.remove("fade-in");
+      void target.offsetWidth;
+      target.classList.add("fade-in");
+    }
+
+    // Active Sidebar Highlight
+    document.querySelectorAll(".nav-item").forEach(item => {
+      if (item.getAttribute("data-page") === pageId) {
+        item.className = "nav-item flex items-center gap-2.5 px-3 py-2 rounded-lg font-semibold text-white bg-bank-navy transition-colors cursor-pointer";
+      } else {
+        item.className = "nav-item flex items-center gap-2.5 px-3 py-2 rounded-lg font-medium text-bank-slate hover:bg-slate-100 transition-colors cursor-pointer";
+      }
+    });
+  }
+
+  // ── ADMIN: UPLOAD & PROCESS CIRCULAR (Zero Pop-ups, Strict File Match) ──
+  function triggerTestPdfIngestion() {
+    processCircularFile("VIDHI_Illustrative_KYC_Circular_Test.pdf");
+  }
+
+  function triggerUnauthorizedPdfTest() {
+    processCircularFile("Unrelated_Circular_Notice.pdf");
+  }
+
+  function handleFileUpload(event) {
+    const file = event.target.files[0];
+    if (file) {
+      processCircularFile(file.name);
+    }
+  }
+
+  function processCircularFile(fileName) {
+    const progressBox = document.getElementById("ingestion-progress-box");
+    const statusText = document.getElementById("ingestion-status-text");
+    const percentEl = document.getElementById("ingestion-percent");
+    const bar = document.getElementById("ingestion-bar");
+    const successNotice = document.getElementById("upload-success-notice");
+    const errorNotice = document.getElementById("upload-error-notice");
+
+    if (successNotice) successNotice.classList.add("view-hidden");
+    if (errorNotice) errorNotice.classList.add("view-hidden");
+    progressBox.classList.remove("view-hidden");
+
+    const isMatch = isAuthorizedTestPdf(fileName);
+
+    let progress = 10;
+    const interval = setInterval(() => {
+      progress += 20;
+      if (progress === 30) {
+        statusText.textContent = isMatch 
+          ? "OCR & Gazette Document Parsing: DEMO/KYC/2026/001..." 
+          : "Scanning Document Headers & Regulatory Metadata...";
+      } else if (progress === 50) {
+        statusText.textContent = isMatch 
+          ? "Extracting Clauses: 3.1, 3.2, 3.3 (Negative Constraint)..." 
+          : "Checking Circular Signature against Knowledge Graph...";
+      } else if (progress === 70) {
+        statusText.textContent = isMatch 
+          ? "Mapping Internal Bank Policy Gap (POL-RETAIL-KYC-v3)..." 
+          : "Evaluating Regulatory Schema Compatibility...";
+      } else if (progress === 90) {
+        statusText.textContent = isMatch 
+          ? "Generating Typed DSL & Running Sandbox Backtest (14.2k accounts)..." 
+          : "Comparing against Authorized Directives...";
+      } else if (progress >= 100) {
+        clearInterval(interval);
+        bar.style.width = "100%";
+        percentEl.textContent = "100%";
+
+        const state = getSystemState();
+
+        if (isMatch) {
+          statusText.textContent = "Compilation Complete! Dispatched to Compliance Desk.";
+          state.uploaded = true;
+          state.unauthorizedFile = null;
+          state.fileName = "VIDHI_Illustrative_KYC_Circular_Test.pdf";
+          state.circularRef = "DEMO/KYC/2026/001";
+          state.authority = "Fictional Regulatory Test Authority";
+          state.effectiveDate = "01 January 2027";
+          state.notificationDate = "01 November 2026";
+          state.subject = "Amendment to Customer KYC Review Procedures";
+          state.makerSigned = false;
+          state.checkerSigned = false;
+          saveSystemState(state);
+
+          if (isBackendConnected) {
+            try {
+              fetch("/api/circulars/upload", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ fileName: "VIDHI_Illustrative_KYC_Circular_Test.pdf" })
+              }).catch(err => console.warn("[VIDHI API Sync]", err.message));
+            } catch(e) {}
+          }
+
+          setTimeout(() => {
+            progressBox.classList.add("view-hidden");
+            if (successNotice) successNotice.classList.remove("view-hidden");
+          }, 350);
+        } else {
+          statusText.textContent = "Ingestion Rejected: Unrecognized Document.";
+          state.uploaded = false;
+          state.unauthorizedFile = fileName;
+          state.makerSigned = false;
+          state.checkerSigned = false;
+          saveSystemState(state);
+
+          if (isBackendConnected) {
+            try {
+              fetch("/api/circulars/upload", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ fileName })
+              }).catch(err => console.warn("[VIDHI API Sync]", err.message));
+            } catch(e) {}
+          }
+
+          setTimeout(() => {
+            progressBox.classList.add("view-hidden");
+            if (errorNotice) {
+              const errName = document.getElementById("upload-error-filename");
+              if (errName) errName.textContent = fileName;
+              errorNotice.classList.remove("view-hidden");
+            }
+          }, 350);
+        }
+      }
+      bar.style.width = progress + "%";
+      percentEl.textContent = Math.min(progress, 100) + "%";
+    }, 200);
+  }
+
+  // ── RENDER DYNAMIC STATE ACROSS ROLES ──
+  function renderDynamicState() {
+    const state = getSystemState();
+    const isEmployee = activeSessionUser && activeSessionUser.roleKey === "employee";
+    const isAdmin = activeSessionUser && activeSessionUser.roleKey === "admin";
+
+    // 1. Employee Top Banner Alert
+    const banner = document.getElementById("employee-alert-banner");
+    if (banner) {
+      if (isEmployee) {
+        banner.classList.remove("view-hidden");
+        if (!state.uploaded) {
+          if (state.unauthorizedFile) {
+            banner.className = "p-4 rounded-xl bg-red-50 border-2 border-red-300 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-3 fade-in";
+            banner.innerHTML = `
+              <div class="flex items-start gap-3">
+                <div class="w-8 h-8 rounded-lg bg-red-200 text-red-900 flex items-center justify-center shrink-0 mt-0.5">
+                  <span class="material-symbols-outlined text-xl">block</span>
+                </div>
+                <div>
+                  <div class="text-xs font-bold text-red-900 uppercase tracking-wider">
+                    DOCUMENT REJECTED: Unrecognized Circular Ingested by Admin
+                  </div>
+                  <p class="text-xs text-red-800 mt-0.5">
+                    System Administrator uploaded <strong class="font-mono">${state.unauthorizedFile}</strong>, which is not the designated test circular. Only <strong>VIDHI_Illustrative_KYC_Circular_Test.pdf</strong> produces automated compliance output. <strong>Zero obligations generated for Compliance Desk.</strong>
+                  </p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2 shrink-0">
+                <span class="px-2.5 py-1 rounded bg-red-100 text-red-800 font-semibold text-xs border border-red-200">
+                  0 Obligations Available
+                </span>
+              </div>
+            `;
+          } else {
+            banner.className = "p-4 rounded-xl bg-slate-100 border border-slate-300 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-3 fade-in";
+            banner.innerHTML = `
+              <div class="flex items-start gap-3">
+                <div class="w-8 h-8 rounded-lg bg-slate-200 text-slate-700 flex items-center justify-center shrink-0 mt-0.5">
+                  <span class="material-symbols-outlined text-xl">pending_actions</span>
+                </div>
+                <div>
+                  <div class="text-xs font-bold text-bank-navy uppercase tracking-wider">
+                    AWAITING REGULATORY CIRCULAR INGESTION
+                  </div>
+                  <p class="text-xs text-bank-muted mt-0.5">
+                    Waiting for System Administrator to ingest <strong>VIDHI_Illustrative_KYC_Circular_Test.pdf</strong>. Output will appear here once ingested.
+                  </p>
+                </div>
+              </div>
+            `;
+          }
+        } else if (state.uploaded && !state.makerSigned) {
+          banner.className = "p-4 rounded-xl bg-amber-50 border-2 border-amber-300 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-3 fade-in";
+          banner.innerHTML = `
+            <div class="flex items-start gap-3">
+              <div class="w-8 h-8 rounded-lg bg-amber-200 text-amber-900 flex items-center justify-center shrink-0 mt-0.5">
+                <span class="material-symbols-outlined text-xl">notifications_active</span>
+              </div>
+              <div>
+                <div class="text-xs font-bold text-amber-900 uppercase tracking-wider">
+                  ACTION REQUIRED (COMPLIANCE DESK): Ingested Directive Ready for Operational Review
+                </div>
+                <p class="text-xs text-amber-800 mt-0.5">
+                  System Administrator has uploaded <strong>VIDHI_Illustrative_KYC_Circular_Test.pdf</strong> (<span class="font-mono font-semibold">DEMO/KYC/2026/001</span>). 
+                  <strong>5 Obligations Extracted</strong> • <strong>1 Policy Gap Identified</strong> • Pending Level 1 Maker Signoff by K. S. Narayanan.
+                </p>
+              </div>
+            </div>
+            <div class="flex items-center gap-2 shrink-0">
+              <button onclick="navigateTo('obligations')" class="px-3 py-1.5 rounded-lg bg-white border border-amber-300 text-amber-900 text-xs font-semibold hover:bg-amber-100 transition-colors">
+                Inspect Obligations
+              </button>
+              <button onclick="navigateTo('governance')" class="px-3.5 py-1.5 rounded-lg bg-amber-800 hover:bg-amber-900 text-white text-xs font-bold transition-colors shadow-xs flex items-center gap-1">
+                <span class="material-symbols-outlined text-sm">draw</span>
+                <span>Execute Maker Sign-Off (Key 1)</span>
+              </button>
+            </div>
+          `;
+        } else if (state.uploaded && state.makerSigned) {
+          // Highlighted acceptance state for employee
+          banner.className = "p-4 rounded-xl bg-emerald-50 border-2 border-emerald-500 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-3 fade-in";
+          banner.innerHTML = `
+            <div class="flex items-start gap-3">
+              <div class="w-8 h-8 rounded-lg bg-emerald-200 text-emerald-900 flex items-center justify-center shrink-0 mt-0.5">
+                <span class="material-symbols-outlined text-xl font-bold">verified</span>
+              </div>
+              <div>
+                <div class="text-xs font-bold text-emerald-950 uppercase tracking-wider flex items-center gap-2">
+                  <span>RULES OFFICIALLY ACCEPTED &amp; HIGHLIGHTED</span>
+                  <span class="bg-emerald-600 text-white text-[10px] px-2 py-0.2 rounded font-mono font-bold">KEY 1 SIGNED</span>
+                </div>
+                <p class="text-xs text-emerald-800 mt-0.5">
+                  Compliance Officer K. S. Narayanan verified and accepted all 5 obligations from <strong>VIDHI_Illustrative_KYC_Circular_Test.pdf</strong> at <strong>${state.makerSignTime || 'Today'}</strong>. 
+                  <span class="underline font-semibold">All rules are highlighted in emerald green below.</span> Pending System Administrator Level 2 Checker release.
+                </p>
+              </div>
+            </div>
+            <div class="flex items-center gap-2 shrink-0">
+              <button onclick="navigateTo('obligations')" class="px-3 py-1.5 rounded-lg bg-white border border-emerald-300 text-emerald-900 text-xs font-bold hover:bg-emerald-100 transition-colors shadow-xs">
+                View Highlighted Rules
+              </button>
+              <button onclick="navigateTo('rule-engine')" class="px-3 py-1.5 rounded-lg bg-emerald-800 hover:bg-emerald-900 text-white text-xs font-bold transition-colors shadow-xs">
+                View Accepted DSL
+              </button>
+            </div>
+          `;
+        }
+      } else {
+        banner.classList.add("view-hidden");
+      }
+    }
+
+    // 2. Toggle Empty State vs Content Containers across all modules
+    const modules = [
+      { empty: "obligations-empty-container", content: "obligations-content-container" },
+      { empty: "policy-empty-container", content: "policy-content-container" },
+      { empty: "rule-empty-container", content: "rule-content-container" },
+      { empty: "backtest-empty-container", content: "backtest-content-container" },
+      { empty: "governance-empty-container", content: "governance-content-container" }
+    ];
+
+    modules.forEach(m => {
+      const elEmpty = document.getElementById(m.empty);
+      const elContent = document.getElementById(m.content);
+      if (elEmpty && elContent) {
+        if (!state.uploaded) {
+          elEmpty.classList.remove("view-hidden");
+          elContent.classList.add("view-hidden");
+        } else {
+          elEmpty.classList.add("view-hidden");
+          elContent.classList.remove("view-hidden");
+        }
+      }
+    });
+
+    // 3. Update Circular Intake Document Profile Summary
+    const docPill = document.getElementById("doc-status-pill");
+    const docTitle = document.getElementById("doc-file-title");
+    const docAuthority = document.getElementById("doc-authority");
+    const docRef = document.getElementById("doc-ref");
+    const docDate = document.getElementById("doc-date");
+    const docEffective = document.getElementById("doc-effective");
+    const docScope = document.getElementById("doc-scope-box");
+
+    if (docTitle) {
+      if (state.uploaded) {
+        if (docPill) { docPill.className = "px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200"; docPill.textContent = "Parsed & Scoped"; }
+        docTitle.textContent = state.fileName;
+        if (docAuthority) docAuthority.textContent = state.authority;
+        if (docRef) docRef.textContent = state.circularRef;
+        if (docDate) docDate.textContent = state.notificationDate;
+        if (docEffective) docEffective.textContent = state.effectiveDate;
+        if (docScope) docScope.innerHTML = `<div><strong>Subject:</strong> ${state.subject}</div><div><strong>Addressed To:</strong> The Compliance Officer, ABC Demo Bank</div><div><strong>Scope Verification:</strong> Scheduled Commercial Banking Operations. Applicable across retail customer accounts.</div>`;
+      } else {
+        if (docPill) { docPill.className = "px-2 py-0.5 rounded text-[10px] font-bold bg-red-50 text-red-700 border border-red-200"; docPill.textContent = "No Authorized Directive"; }
+        docTitle.textContent = state.unauthorizedFile ? `Rejected File: ${state.unauthorizedFile}` : "Awaiting Authorized Circular";
+        if (docAuthority) docAuthority.textContent = "None";
+        if (docRef) docRef.textContent = "NONE";
+        if (docDate) docDate.textContent = "Pending";
+        if (docEffective) docEffective.textContent = "Pending";
+        if (docScope) docScope.innerHTML = `<div class="text-red-700 font-semibold">Ingestion Required: Only VIDHI_Illustrative_KYC_Circular_Test.pdf is configured for autonomous compilation.</div>`;
+      }
+    }
+
+    // 4. Highlighted Rules in Obligation Register when Maker Accepted
+    const obAcceptedBanner = document.getElementById("obligations-accepted-banner");
+    const obTime = document.getElementById("obligations-sign-timestamp");
+    if (obTime && state.makerSignTime) obTime.textContent = state.makerSignTime;
+
+    const clauseCards = [
+      { id: "clause-card-3-1", badge: "badge-accepted-3-1", isGuardrail: false },
+      { id: "clause-card-3-2", badge: "badge-accepted-3-2", isGuardrail: false },
+      { id: "clause-card-3-3", badge: "badge-accepted-3-3", isGuardrail: true },
+      { id: "clause-card-4-3", badge: "badge-accepted-4-3", isGuardrail: false },
+      { id: "clause-card-5-1", badge: "badge-accepted-5-1", isGuardrail: false }
+    ];
+
+    if (state.uploaded && state.makerSigned) {
+      if (obAcceptedBanner) obAcceptedBanner.classList.remove("view-hidden");
+
+      clauseCards.forEach(c => {
+        const cardEl = document.getElementById(c.id);
+        const badgeEl = document.getElementById(c.badge);
+        if (badgeEl) badgeEl.classList.remove("view-hidden");
+        if (cardEl) {
+          if (c.isGuardrail) {
+            cardEl.className = "clause-card p-4 rounded-xl border-2 border-emerald-600 bg-emerald-50/50 shadow-lg ring-4 ring-emerald-400/30 space-y-2 transition-all";
+          } else {
+            cardEl.className = "clause-card p-4 rounded-xl border-2 border-emerald-500 bg-emerald-50/20 shadow-md ring-2 ring-emerald-300/40 space-y-2 transition-all";
+          }
+        }
+      });
+    } else {
+      if (obAcceptedBanner) obAcceptedBanner.classList.add("view-hidden");
+
+      clauseCards.forEach(c => {
+        const cardEl = document.getElementById(c.id);
+        const badgeEl = document.getElementById(c.badge);
+        if (badgeEl) badgeEl.classList.add("view-hidden");
+        if (cardEl) {
+          if (c.isGuardrail) {
+            cardEl.className = "clause-card p-4 rounded-xl bg-white border-2 border-red-200 shadow-xs space-y-2 transition-all";
+          } else {
+            cardEl.className = "clause-card p-4 rounded-xl bg-white border border-bank-border shadow-xs space-y-2 transition-all";
+          }
+        }
+      });
+    }
+
+    // 5. Highlighted Rules in CBS Business Rule DSL
+    const dslAcceptedBanner = document.getElementById("dsl-accepted-highlight");
+    const dslTime = document.getElementById("dsl-sign-time");
+    const dslCodeBox = document.getElementById("dsl-code-box");
+    const dslPill = document.getElementById("dsl-status-pill");
+    const dslTaskCall = document.getElementById("dsl-rule-task-call");
+    const dslGuardCall = document.getElementById("dsl-rule-guardrail-call");
+
+    if (state.uploaded && state.makerSigned) {
+      if (dslAcceptedBanner) dslAcceptedBanner.classList.remove("view-hidden");
+      if (dslTime && state.makerSignTime) dslTime.textContent = state.makerSignTime;
+      if (dslCodeBox) dslCodeBox.className = "p-4 rounded-xl bg-bank-navy text-slate-100 font-mono text-xs leading-relaxed overflow-x-auto border-2 border-emerald-500 ring-2 ring-emerald-400/40 transition-all";
+      if (dslPill) { dslPill.className = "px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-100 text-emerald-800 border border-emerald-300"; dslPill.textContent = "MAKER_ACCEPTED_RULE"; }
+      if (dslTaskCall) dslTaskCall.className = "my-1.5 p-2 rounded bg-emerald-950/70 border-l-4 border-emerald-400 text-emerald-200 transition-all";
+      if (dslGuardCall) dslGuardCall.className = "my-1.5 p-2 rounded bg-emerald-950/90 border-l-4 border-emerald-400 text-emerald-100 font-bold transition-all";
+    } else {
+      if (dslAcceptedBanner) dslAcceptedBanner.classList.add("view-hidden");
+      if (dslCodeBox) dslCodeBox.className = "p-4 rounded-xl bg-bank-navy text-slate-100 font-mono text-xs leading-relaxed overflow-x-auto transition-all";
+      if (dslPill) { dslPill.className = "px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-50 text-amber-700 border border-amber-200"; dslPill.textContent = "DRAFT_PENDING_MAKER_CHECKER"; }
+      if (dslTaskCall) dslTaskCall.className = "my-1.5 p-2 rounded bg-slate-800/80 border-l-4 border-bank-blue transition-all";
+      if (dslGuardCall) dslGuardCall.className = "my-1.5 p-2 rounded bg-slate-800/80 border-l-4 border-red-500 transition-all";
+    }
+
+    // 6. Highlighted Policy Mapping when Maker Accepted
+    const policyAcceptedBanner = document.getElementById("policy-accepted-banner");
+    const policyGapBox = document.getElementById("policy-gap-box");
+    const badgeGapAccepted = document.getElementById("badge-gap-accepted");
+    const policyCards = ["policy-card-1", "policy-card-2", "policy-card-3"];
+
+    if (state.uploaded && state.makerSigned) {
+      if (policyAcceptedBanner) policyAcceptedBanner.classList.remove("view-hidden");
+      if (policyGapBox) policyGapBox.className = "p-4 rounded-xl bg-emerald-50/70 border-2 border-emerald-400 text-xs space-y-1 transition-all";
+      if (badgeGapAccepted) badgeGapAccepted.classList.remove("view-hidden");
+      policyCards.forEach(id => {
+        const pCard = document.getElementById(id);
+        if (pCard) pCard.className = "p-3 rounded-lg bg-emerald-50/30 border border-emerald-400 space-y-1.5 transition-all";
+      });
+    } else {
+      if (policyAcceptedBanner) policyAcceptedBanner.classList.add("view-hidden");
+      if (policyGapBox) policyGapBox.className = "p-4 rounded-xl bg-amber-50 border border-amber-200 text-xs space-y-1 transition-all";
+      if (badgeGapAccepted) badgeGapAccepted.classList.add("view-hidden");
+      policyCards.forEach(id => {
+        const pCard = document.getElementById(id);
+        if (pCard) pCard.className = "p-3 rounded-lg bg-slate-50 border border-slate-200 space-y-1.5 transition-all";
+      });
+    }
+
+    // 7. Dual-Key Governance UI
+    const box1 = document.getElementById("box-signer-1");
+    const badge1 = document.getElementById("badge-signer-1");
+    const action1 = document.getElementById("action-signer-1");
+
+    const box2 = document.getElementById("box-signer-2");
+    const badge2 = document.getElementById("badge-signer-2");
+    const action2 = document.getElementById("action-signer-2");
+    const ticketPill = document.getElementById("ticket-workflow-pill");
+    const govBadge = document.getElementById("badge-gov-status");
+    const countSignoffs = document.getElementById("count-pending-signoffs");
+    const sidebarBadge = document.getElementById("sidebar-pending-badge");
+    const tableBadge = document.getElementById("badge-table-status");
+
+    if (!state.uploaded) {
+      if (govBadge) { govBadge.textContent = "0 Actions Pending"; govBadge.className = "px-2.5 py-1 rounded-full bg-slate-100 text-slate-700 font-bold text-xs"; }
+      if (countSignoffs) countSignoffs.textContent = "0";
+      if (sidebarBadge) { sidebarBadge.textContent = "0"; sidebarBadge.className = "px-1.5 py-0.2 rounded-full bg-slate-100 text-slate-600 font-bold text-[10px]"; }
+      if (tableBadge) { tableBadge.innerHTML = "Awaiting Valid Circular"; tableBadge.className = "px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 font-semibold text-[10px]"; }
+    } else if (state.makerSigned && state.checkerSigned) {
+      // Both signed
+      if (ticketPill) { ticketPill.innerHTML = "&check; Fully Authorized &amp; Released to CBS Shadow Engine"; ticketPill.className = "px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-300"; }
+      if (govBadge) { govBadge.innerHTML = "&check; 0 Actions Pending"; govBadge.className = "px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 font-bold text-xs"; }
+      if (countSignoffs) countSignoffs.textContent = "0";
+      if (sidebarBadge) { sidebarBadge.textContent = "0"; sidebarBadge.className = "px-1.5 py-0.2 rounded-full bg-emerald-100 text-emerald-800 font-bold text-[10px]"; }
+      if (tableBadge) { tableBadge.innerHTML = "&check; CBS Shadow Deployed"; tableBadge.className = "px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-semibold text-[10px]"; }
+
+      // Key 1 Signed
+      if (box1) box1.className = "p-4 rounded-xl bg-emerald-50/50 border border-emerald-300 space-y-2";
+      if (badge1) { badge1.className = "text-emerald-700 font-bold text-[10px] bg-white px-2 py-0.5 rounded border border-emerald-300"; badge1.innerHTML = "&check; MAKER SIGNED BY K. S. NARAYANAN"; }
+      if (action1) action1.innerHTML = `<div class="text-[11px] text-emerald-800 font-medium">&check; Digital Signature Valid • Verified on ${state.makerSignTime || 'Today'}</div>`;
+
+      // Key 2 Signed
+      if (box2) box2.className = "p-4 rounded-xl bg-emerald-50/50 border border-emerald-300 space-y-2";
+      if (badge2) { badge2.className = "text-emerald-700 font-bold text-[10px] bg-white px-2 py-0.5 rounded border border-emerald-300"; badge2.innerHTML = "&check; CHECKER SIGNED BY KEISHORE G"; }
+      if (action2) action2.innerHTML = `<div class="text-[11px] text-emerald-800 font-medium">&check; System Administrator Dual-Key Authorization Executed • Released to CBS Shadow Mode</div>`;
+
+    } else if (state.makerSigned && !state.checkerSigned) {
+      // Maker signed, Checker pending
+      if (ticketPill) { ticketPill.innerHTML = "Awaiting Key 2 Checker Authorization (Keishore G)"; ticketPill.className = "px-3 py-1 rounded-full text-xs font-bold bg-amber-50 text-amber-700 border border-amber-200"; }
+      if (govBadge) { govBadge.textContent = "1 Action Pending Signoff"; govBadge.className = "px-2.5 py-1 rounded-full bg-amber-100 text-amber-800 font-bold text-xs"; }
+      if (countSignoffs) countSignoffs.textContent = "1";
+      if (sidebarBadge) { sidebarBadge.textContent = "1 Pending"; sidebarBadge.className = "px-1.5 py-0.2 rounded-full bg-amber-100 text-amber-800 font-bold text-[10px]"; }
+      if (tableBadge) { tableBadge.innerHTML = "Maker Signed • Awaiting Admin Checker"; tableBadge.className = "px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 font-semibold text-[10px]"; }
+
+      // Key 1 Signed
+      if (box1) box1.className = "p-4 rounded-xl bg-emerald-50/50 border border-emerald-300 space-y-2";
+      if (badge1) { badge1.className = "text-emerald-700 font-bold text-[10px] bg-white px-2 py-0.5 rounded border border-emerald-300"; badge1.innerHTML = "&check; MAKER SIGNED BY K. S. NARAYANAN"; }
+      if (action1) action1.innerHTML = `<div class="text-[11px] text-emerald-800 font-medium">&check; Signed by K. S. Narayanan at ${state.makerSignTime || 'Today'} • Escalated to Admin</div>`;
+
+      // Key 2 Ready for Admin (Keishore G)
+      if (box2) box2.className = "p-4 rounded-xl bg-amber-50/50 border border-amber-300 space-y-2";
+      if (badge2) { badge2.className = "text-amber-800 font-bold text-[10px] bg-white px-2 py-0.5 rounded border border-amber-300"; badge2.innerHTML = "READY FOR ADMIN CHECKER SIGNATURE"; }
+
+      if (action2) {
+        if (isAdmin) {
+          action2.innerHTML = `
+            <button type="button" onclick="executeCheckerSignoff()" class="w-full py-2 rounded-lg bg-bank-navy hover:bg-slate-800 text-white font-bold text-xs transition-all flex items-center justify-center gap-1.5 shadow-sm">
+              <span class="material-symbols-outlined text-sm">draw</span>
+              <span>Authorize &amp; Digitally Sign as Admin (Checker Key 2)</span>
+            </button>
+          `;
+        } else {
+          action2.innerHTML = `
+            <div class="p-2 rounded bg-slate-100 text-slate-600 text-[11px]">
+              Awaiting System Administrator (Keishore G) to sign in and execute final Checker Authorization.
+            </div>
+          `;
+        }
+      }
+
+    } else {
+      // Maker pending
+      if (ticketPill) { ticketPill.innerHTML = "Awaiting Level 1 Maker Signoff (K. S. Narayanan)"; ticketPill.className = "px-3 py-1 rounded-full text-xs font-bold bg-amber-50 text-amber-700 border border-amber-200"; }
+      if (govBadge) { govBadge.textContent = "1 Action Pending Signoff"; govBadge.className = "px-2.5 py-1 rounded-full bg-amber-100 text-amber-800 font-bold text-xs"; }
+      if (countSignoffs) countSignoffs.textContent = "1";
+      if (sidebarBadge) { sidebarBadge.textContent = "1 Pending"; sidebarBadge.className = "px-1.5 py-0.2 rounded-full bg-red-100 text-red-700 font-bold text-[10px]"; }
+      if (tableBadge) { tableBadge.innerHTML = "Pending Maker Signoff (K. S. Narayanan)"; tableBadge.className = "px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 font-semibold text-[10px]"; }
+
+      if (box1) box1.className = "p-4 rounded-xl bg-amber-50/50 border border-amber-300 space-y-2";
+      if (badge1) { badge1.className = "text-amber-800 font-bold text-[10px] bg-white px-2 py-0.5 rounded border border-amber-300"; badge1.innerHTML = "PENDING MAKER SIGNATURE"; }
+
+      if (action1) {
+        if (isEmployee) {
+          action1.innerHTML = `
+            <button type="button" onclick="executeMakerSignoff()" class="w-full py-2 rounded-lg bg-bank-navy hover:bg-slate-800 text-white font-bold text-xs transition-all flex items-center justify-center gap-1.5 shadow-sm">
+              <span class="material-symbols-outlined text-sm">draw</span>
+              <span>Verify Obligations &amp; Sign as Maker (K. S. Narayanan)</span>
+            </button>
+          `;
+        } else {
+          action1.innerHTML = `
+            <div class="p-2 rounded bg-slate-100 text-slate-600 text-[11px]">
+              Awaiting Compliance Officer (K. S. Narayanan) to sign in and verify Level 1 obligations.
+            </div>
+          `;
+        }
+      }
+
+      if (box2) box2.className = "p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2";
+      if (badge2) { badge2.className = "text-bank-muted font-bold text-[10px] bg-white px-2 py-0.5 rounded border border-slate-200"; badge2.innerHTML = "AWAITING KEY 1 FIRST"; }
+      if (action2) {
+        action2.innerHTML = `
+          <button type="button" disabled class="w-full py-2 rounded-lg bg-slate-200 text-slate-400 font-bold text-xs transition-all flex items-center justify-center gap-1.5 cursor-not-allowed">
+            <span class="material-symbols-outlined text-sm">lock</span>
+            <span>Awaiting Maker Signature First</span>
+          </button>
+        `;
+      }
+    }
+  }
+
+  // ── DUAL-MODE FULL-STACK API SYNCHRONIZATION ──
+  let isBackendConnected = false;
+
+  async function checkBackendConnectivity() {
+    try {
+      const res = await fetch("/api/health", { method: "GET", headers: { "Accept": "application/json" } });
+      if (res.ok) {
+        isBackendConnected = true;
+        const badge = document.getElementById("backend-conn-badge");
+        if (badge) {
+          badge.className = "px-2.5 py-1 rounded text-[10px] font-mono font-bold bg-emerald-50 text-emerald-800 border border-emerald-300 flex items-center gap-1.5 shadow-xs";
+          badge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span><span>FULL-STACK REST API: LIVE (PORT 5000)</span>`;
+        }
+        // Pull latest state from backend server
+        try {
+          const stateRes = await fetch("/api/state");
+          if (stateRes.ok) {
+            const serverState = await stateRes.json();
+            localStorage.setItem("vidhi_demo_state", JSON.stringify(serverState));
+            renderDynamicState();
+          }
+        } catch(e) {}
+      }
+    } catch(e) {
+      isBackendConnected = false;
+      const badge = document.getElementById("backend-conn-badge");
+      if (badge) {
+        badge.className = "px-2.5 py-1 rounded text-[10px] font-mono font-bold bg-blue-50 text-bank-blue border border-blue-200 flex items-center gap-1.5 shadow-xs";
+        badge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span><span>STANDALONE HTML (ZERO-DEPENDENCY)</span>`;
+      }
+    }
+  }
+
+  // ── COMPLIANCE OFFICER: SIGN LEVEL 1 MAKER APPROVAL ──
+  // Immediately highlights the rules on the employee's views!
+  function executeMakerSignoff() {
+    const state = getSystemState();
+    state.makerSigned = true;
+    state.makerSignTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + " IST";
+    saveSystemState(state);
+
+    if (isBackendConnected) {
+      try {
+        fetch("/api/governance/sign", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ key: 1, role: "maker" })
+        }).catch(err => console.warn("[VIDHI API Sync]", err.message));
+      } catch(e) {}
+    }
+
+    // Smoothly navigate to Obligation Register so the officer immediately sees the highlighted rules!
+    navigateTo("obligations");
+  }
+
+  // ── ADMIN: SIGN LEVEL 2 CHECKER RELEASE ──
+  function executeCheckerSignoff() {
+    const state = getSystemState();
+    state.checkerSigned = true;
+    state.checkerSignTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + " IST";
+    saveSystemState(state);
+
+    if (isBackendConnected) {
+      try {
+        fetch("/api/governance/sign", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ key: 2, role: "checker" })
+        }).catch(err => console.warn("[VIDHI API Sync]", err.message));
+      } catch(e) {}
+    }
+  }
+
+  // ── Video Walkthrough Modal ──
+  function openVideoModal() {
+    document.getElementById("video-modal").classList.remove("view-hidden");
+  }
+  function closeVideoModal() {
+    document.getElementById("video-modal").classList.add("view-hidden");
+  }
+
+  // ── Initialize Event Listeners ──
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".nav-item").forEach(item => {
+      item.addEventListener("click", (e) => {
+        e.preventDefault();
+        navigateTo(item.getAttribute("data-page"));
+      });
+    });
+    selectRole("admin");
+    renderDynamicState();
+    checkBackendConnectivity();
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,375 @@
+{
+  "name": "VIDHI - Multi Agent Regulatory Intelligence",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "vidhi-circular-intake",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "id": "e79628eb-4ffd-418a-8ac1-65516b367b8c",
+      "name": "Circular Intake",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -448,
+        256
+      ],
+      "webhookId": "vidhi-circular-intake"
+    },
+    {
+      "parameters": {
+        "jsCode": "const b = $json.body || $json; if (!b.circular_text || b.circular_text.length < 30) throw new Error('Circular text is missing or too short'); return [{json:{circular_text:b.circular_text,bank_profile:b.bank_profile || {bank_type:'Urban Cooperative Bank'},policies:b.policies || [],circular_id:b.circular_id || null}}];"
+      },
+      "id": "baf52c0b-46e5-4810-b177-e90df35d5d66",
+      "name": "Normalize Circular",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -112,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://openrouter.ai/api/v1/chat/completions",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openAiApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ {model:'openai/gpt-4o-mini',temperature:0.1,messages:[{role:'system',content:'You are the VIDHI Applicability Agent. Determine whether the RBI circular applies to the given bank. Return JSON only with summary, applicable_entities, effective_date, scope, uncertainties.'},{role:'user',content:JSON.stringify($json)}]} }}",
+        "options": {}
+      },
+      "id": "07244deb-a515-4911-8b92-9af1ade90841",
+      "name": "Agent 1 - Applicability",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        80,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://openrouter.ai/api/v1/chat/completions",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer YOUR_OPENROUTER_API_KEY"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ {model:'openai/gpt-4o-mini',temperature:0.1,response_format:{type:'json_object'},messages:[{role:'system',content:'You are the VIDHI Obligation Extraction Agent. Extract exact MUST, MUST NOT, MAY and SHOULD obligations. Do not invent clauses. Return JSON with obligations array containing clause_ref, evidence_span, obligation_text, modality, applicability, deadline and confidence.'},{role:'user',content:JSON.stringify($('Normalize Circular').first().json)}]} }}",
+        "options": {}
+      },
+      "id": "bf312a14-2655-4b5a-8aa7-afbdf0b20411",
+      "name": "Agent 2 - Obligation Extraction",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        80,
+        304
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://openrouter.ai/api/v1/chat/completions",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer YOUR_OPENROUTER_API_KEY"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ {model:'openai/gpt-4o-mini',temperature:0.1,response_format:{type:'json_object'},messages:[{role:'system',content:'You are the VIDHI Policy Mapping Agent. Match obligations to the provided bank policies. Never invent policy references. Return JSON with mappings array, obligation_index, policy_name, match_status, rationale and existing_rule_reference.'},{role:'user',content:JSON.stringify({input:$('Normalize Circular').first().json,obligations:$('Agent 2 - Obligation Extraction').first().json.choices[0].message.content})}]} }}",
+        "options": {}
+      },
+      "id": "c904bfa4-93a2-4776-8ebb-deb583f375f2",
+      "name": "Agent 3 - Policy Mapping",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        256,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://openrouter.ai/api/v1/chat/completions",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer YOUR_OPENROUTER_API_KEY"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ {model:'openai/gpt-4o-mini',temperature:0.1,response_format:{type:'json_object'},messages:[{role:'system',content:'You are VIDHI Rule Authoring Agent. Generate draft typed JSON rules only. Allowed fields: amount, transaction_type, customer_risk, country_code. Operators: gt,gte,lt,lte,eq,neq,in. Actions: flag,review,hold. Never generate executable SQL or code. Return JSON rules array with obligation_index, rule_name, description and dsl.'},{role:'user',content:JSON.stringify({obligations:$('Agent 2 - Obligation Extraction').first().json.choices[0].message.content,mappings:$('Agent 3 - Policy Mapping').first().json.choices[0].message.content})}]} }}",
+        "options": {}
+      },
+      "id": "c5352de5-3d38-4090-9779-fec994f9e731",
+      "name": "Agent 4 - Rule Authoring",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        512,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://openrouter.ai/api/v1/chat/completions",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer YOUR_OPENROUTER_API_KEY"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ {model:'openai/gpt-4o-mini',temperature:0,response_format:{type:'json_object'},messages:[{role:'system',content:'You are VIDHI Validation Agent. Review drafted rules against obligations. Identify missing rules, invalid fields, thresholds, comparator errors, unit ambiguity, date errors and conflicts. Return JSON with valid, issues, boundary_tests, missing_obligations.'},{role:'user',content:JSON.stringify({rules:$('Agent 4 - Rule Authoring').first().json.choices[0].message.content,obligations:$('Agent 2 - Obligation Extraction').first().json.choices[0].message.content})}]} }}",
+        "options": {}
+      },
+      "id": "fcf07ebc-50e3-4188-aee1-4dfc57948e7f",
+      "name": "Agent 5 - Validation",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        752,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://openrouter.ai/api/v1/chat/completions",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer YOUR_OPENROUTER_API_KEY"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ {model:'openai/gpt-4o-mini',temperature:0.1,response_format:{type:'json_object'},messages:[{role:'system',content:'You are VIDHI Impact Analysis Agent. Estimate possible transaction and customer segment impact. Do not invent measured results. Distinguish unknown data from measured metrics. Return JSON with impact_summary, affected_segments, estimated_risk, data_gaps and recommended_tests.'},{role:'user',content:JSON.stringify({rules:$('Agent 4 - Rule Authoring').first().json.choices[0].message.content,validation:$('Agent 5 - Validation').first().json.choices[0].message.content})}]} }}",
+        "options": {}
+      },
+      "id": "dadf64b3-116f-4529-9527-7a5957ee0e41",
+      "name": "Agent 6 - Impact Analysis",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1008,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const parse = (v) => { const s=typeof v==='string'?v:JSON.stringify(v); try{return JSON.parse(s)}catch{return {raw:s}} }; const get = n => parse($(n).first().json.choices?.[0]?.message?.content || $(n).first().json); const input=$('Normalize Circular').first().json; const rules=get('Agent 4 - Rule Authoring').rules || []; const allowedFields=['amount','transaction_type','customer_risk','country_code']; const allowedOps=['gt','gte','lt','lte','eq','neq','in']; const allowedActions=['flag','review','hold']; const checked=rules.map(r=>{const d=r.dsl||{};const valid=allowedFields.includes(d.field)&&allowedOps.includes(d.operator)&&allowedActions.includes(d.action)&&Object.keys(d).sort().join(',')==='action,field,operator,value';return {...r,validation:{valid,status:valid?'DRAFT':'REJECTED'}}}); return [{json:{circular_id:input.circular_id,bank_profile:input.bank_profile,applicability:get('Agent 1 - Applicability'),obligations:get('Agent 2 - Obligation Extraction'),policy_mapping:get('Agent 3 - Policy Mapping'),rules:checked,validation:get('Agent 5 - Validation'),impact_analysis:get('Agent 6 - Impact Analysis'),approval_required:true,deployment_status:'WAITING_FOR_HUMAN_APPROVAL',warning:'AI-generated draft. Not legal advice. No live banking changes.'}}];"
+      },
+      "id": "2c9dd50a-8743-4170-b204-f88f5404c2c0",
+      "name": "Conductor - Compile Result",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1264,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}",
+        "options": {}
+      },
+      "id": "58535f18-9a82-4078-81d7-d52dc13f06e5",
+      "name": "Return Analysis",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1504,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        432,
+        432
+      ],
+      "id": "f67a6745-0450-4b72-a576-bcd42fd70afe",
+      "name": "AI Agent"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Circular Intake": {
+      "main": [
+        [
+          {
+            "node": "Normalize Circular",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize Circular": {
+      "main": [
+        [
+          {
+            "node": "Agent 1 - Applicability",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Agent 2 - Obligation Extraction",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agent 1 - Applicability": {
+      "main": [
+        [
+          {
+            "node": "Agent 2 - Obligation Extraction",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agent 2 - Obligation Extraction": {
+      "main": [
+        [
+          {
+            "node": "Agent 3 - Policy Mapping",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agent 3 - Policy Mapping": {
+      "main": [
+        [
+          {
+            "node": "Agent 4 - Rule Authoring",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agent 4 - Rule Authoring": {
+      "main": [
+        [
+          {
+            "node": "Agent 5 - Validation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agent 5 - Validation": {
+      "main": [
+        [
+          {
+            "node": "Agent 6 - Impact Analysis",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agent 6 - Impact Analysis": {
+      "main": [
+        [
+          {
+            "node": "Conductor - Compile Result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Conductor - Compile Result": {
+      "main": [
+        [
+          {
+            "node": "Return Analysis",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "433d6485-5aa6-47c6-8cd6-362626f64ebc",
+  "meta": {
+    "instanceId": "230d324e3a54465cff8c45489558e9bbd33151eaf5370932c481f77d719c25ab"
+  },
+  "nodeGroups": [],
+  "id": "CMEcJZV65lgibGOq",
+  "tags": []
+}
