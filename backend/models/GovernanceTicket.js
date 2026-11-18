@@ -76,3 +76,4 @@ class GovernanceTicket {
 }
 
 module.exports = { GovernanceTicket };
+

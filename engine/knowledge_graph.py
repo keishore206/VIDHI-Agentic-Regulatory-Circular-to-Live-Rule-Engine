@@ -109,3 +109,4 @@ if __name__ == "__main__":
     kg = RegulatoryKnowledgeGraph()
     print("=== NEO4J CYPHER DUMP ===")
     print(kg.to_neo4j_cypher())
+

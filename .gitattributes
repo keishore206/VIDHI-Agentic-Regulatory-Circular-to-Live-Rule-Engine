@@ -5,3 +5,4 @@
 *.json linguist-detectable=false
 *.md linguist-documentation=true
 *.pdf binary
+

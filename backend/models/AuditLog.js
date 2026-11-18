@@ -50,3 +50,4 @@ class GoldenThreadLedger {
 }
 
 module.exports = { GoldenThreadLedger };
+

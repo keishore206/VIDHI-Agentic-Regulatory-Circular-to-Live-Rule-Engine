@@ -27,3 +27,4 @@ function requirePermission(requiredPermission) {
 }
 
 module.exports = { requirePermission };
+

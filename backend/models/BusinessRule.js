@@ -67,3 +67,4 @@ class BusinessRule {
 }
 
 module.exports = { BusinessRule };
+

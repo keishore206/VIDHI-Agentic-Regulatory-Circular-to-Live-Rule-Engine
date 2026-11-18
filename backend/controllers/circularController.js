@@ -112,3 +112,4 @@ class CircularController {
 }
 
 module.exports = CircularController;
+

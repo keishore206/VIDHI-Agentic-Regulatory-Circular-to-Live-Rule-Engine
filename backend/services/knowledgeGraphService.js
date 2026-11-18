@@ -33,3 +33,4 @@ function getKnowledgeGraph() {
 }
 
 module.exports = { getKnowledgeGraph };
+

@@ -125,3 +125,4 @@ if __name__ == "__main__":
     ast = compiler.parse_clause_to_ast("3.2", sample_text, "MUST")
     compiled = compiler.compile_rule_dsl("3.2", "DEMO/KYC/2026/001", ast)
     print(json.dumps(compiled, indent=2))
+

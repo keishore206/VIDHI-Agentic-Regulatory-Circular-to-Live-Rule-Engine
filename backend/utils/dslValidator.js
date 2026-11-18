@@ -49,3 +49,4 @@ function validateRuleDsl(dslString) {
 }
 
 module.exports = { validateRuleDsl };
+
